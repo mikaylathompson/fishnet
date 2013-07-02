@@ -1,0 +1,13 @@
+fishnet
+======================
+
+fishnet is a simple link-gathering app. 
+Essentially, it's your bookmarks, but with annotations and the ability to share.
+Your fishnet is where you can keep track of resources and readings, but
+it can also showcase what you're thinking about or working on at the moment.
+At the moment, admin is the only login, and there's only a main folder.
+
+To-do list:
+Allow registration
+Define per-user URLs to enable sharing
+Add tags

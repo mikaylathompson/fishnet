@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm
+from forms import LoginForm, EditForm
 from models import User, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
 
@@ -59,6 +59,23 @@ def user(name):
 	]
 	return render_template('user.html', user = user, links = links)
 
+@app.route('/edit', methods = ['GET', 'POST'])
+@login_required
+def edit():
+	form = EditForm(g.user.name)
+	if form.validate_on_submit():
+		g.user.name = form.name.data
+		g.user.about_me = form.about_me.data
+		db.session.add(g.user)
+		db.session.commit()
+		flash('Your changes have been saved.')
+		return redirect(url_for('user', name = g.user.name))
+
+	else:
+		form.name.data = g.user.name
+		form.about_me.data = g.user.about_me
+	return render_template('edit.html', user=user, form=form)
+
 @app.before_request
 def before_request():
 	g.user = current_user
@@ -66,6 +83,16 @@ def before_request():
 		g.user.last_seen = datetime.utcnow()
 		db.session.add(g.user)
 		db.session.commit()
+
+@app.errorhandler(404)
+def internal_error(error):
+	return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+	db.session.rollback()
+	return render_template('500.html')
+#end of app.
 
 @oid.after_login
 def after_login(resp):
@@ -86,8 +113,10 @@ def after_login(resp):
 		session.pop('remember_me', None)
 	login_user(user, remember = remember_me)
 	return redirect(request.args.get('next') or url_for('index'))
+#end of oid.
 
 @lm.user_loader
 def load_user(id):
 	return User.query.get(int(id))
+#end of lm.
 

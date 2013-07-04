@@ -11,3 +11,12 @@ OPENID_PROVIDERS = [
 	{ 'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id' },
 	{ 'name': 'Yahoo', 'url': 'https://me.yahoo.com' },
 	{ 'name': 'MyOpenID', 'url': 'https://www.myopenid.com' }]
+
+#mail server settings
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+
+#admin list
+ADMINS = ['mikayla.thompson@yale.edu']

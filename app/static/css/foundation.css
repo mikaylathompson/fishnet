@@ -476,11 +476,12 @@ p.lead {
   line-height: 1.6; }
 
 .subheader {
-  line-height: 1.4;
+  line-height: 1.2;
   color: #6f6f6f;
   font-weight: 300;
   margin-top: 0.2em;
   margin-bottom: 0.5em; }
+
 
 /* Typography resets */
 div,
@@ -511,6 +512,10 @@ a {
   color: #99cb62;
   text-decoration: none;
   line-height: inherit; }
+legend a {
+  color: #222222;
+}
+  }
   a:hover, a:focus {
     color: #8dc54f; }
   a img {
@@ -538,11 +543,14 @@ h1, h2, h3, h4, h5, h6 {
   text-rendering: optimizeLegibility;
   margin-top: 0.2em;
   margin-bottom: 0.5em;
-  line-height: 1.2125em; }
+  line-height: 1.2em; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
     font-size: 60%;
     color: #6f6f6f;
     line-height: 0; }
+   small.really-small {
+    font-size: 50%;
+  }
 
 h1 {
   font-size: 2.125em; }
@@ -552,6 +560,7 @@ h2 {
 
 h3 {
   font-size: 1.375em; }
+
 
 h4 {
   font-size: 1.125em; }
@@ -1215,11 +1224,16 @@ fieldset {
   padding: 1.25em;
   margin: 1.125em 0; }
   fieldset legend {
+    font-size: 125%;
+    color: #222222;
     font-weight: bold;
     background: white;
     padding: 0 0.1875em;
     margin: 0;
     margin-left: -0.1875em; }
+  .link {
+   padding: .3em;
+   margin: .5em;}
 
 /* Error Handling */
 .error input,
@@ -1879,7 +1893,8 @@ form.custom {
   .top-bar .name {
     height: 60px;
     margin: 0;
-    font-size: 20px; }
+    font-size: 40px;
+    color: #af4169;}
     .top-bar .name h1 {
       line-height: 60px;
       font-size: 1.3em;
@@ -1889,7 +1904,8 @@ form.custom {
         color: white;
         width: 50%;
         display: block;
-        padding: 0 15px; }
+        padding: 0 15px;
+        color: #c45f84;}
   .top-bar .toggle-topbar {
     position: absolute;
     right: 0;
@@ -2319,8 +2335,6 @@ form.custom {
   display: block;
   font-weight: bold;
   margin-bottom: 1.25em;
-  margin-left: 10em;
-  margin-right: 10em;
   position: relative;
   padding: 0.6875em 1.3125em 0.75em 0.6875em;
   font-size: 1em;

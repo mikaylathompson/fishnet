@@ -1,28 +1,35 @@
-{% extends 'base.html' %}
+<!-- <p>
+	<h2 class="subheader"><a href="{{link.url}}">{{link.title}}</a></h2> 
+	<p>{{link.annotation}}</p>
+
+	<br>
+
+	{% #if link.user_id == user.id %}
+		<a href={{ url_for('delete', id = link.id) }}>delete</a>
+		
+
+		Edit (inc move to diff folder)
+
+	{% #endif %}
+</p> -->
+
+{% extends "base.html" %}
 
 {% block content %}
-<h1 class="subheader">Add a new link:</h1>
-<form action="" method="post" name="newlink">
-	<fieldset>
-		<legend>New Link</legend>
-	{{ form.hidden_tag() }}
-
-	<div class="row">
+<h3 class="subheader">Edit Link</h1>
+	{% if link.user_id == user.id %}
+<form action="" method="post" name="editlink">
+	{{form.hidden_tag()}}
+		<div class="row">
 		<div class="small-10 small-offset-1 columns">
 			<label>Title</label>
 			{{ form.title(size=40) }}
-			{% if form.title.errors %}
-				<small class="error">Invalid entry</small>
-			{% endif %}
 		</div>
 	</div>
 	<div class="row">
 		<div class="small-10 small-offset-1 columns">
 			<label>Link</label>
 			{{ form.url(size=40) }}
-			{% if form.url.errors %}
-				<small class="error">Invalid entry</small>
-			{% endif %}
 		</div>
 	</div>
 	<div class="row">
@@ -35,18 +42,16 @@
 		<div class="small-4 small-offset-1 columns">
 			<label>Folder</label>
 			{{ form.folder(size=4) }}
-			{% if form.folder.errors %}
-				<small class="error">Invalid entry</small>
-			{% endif %}
 		</div>
 	</div>
 	<div class="row">
 		<div class="small-2 small-offset-1 columns">
-			<input type="submit" value="Add link" class="button">
+			<input type="submit" value="Save Changes" class="button">
 		</div>
 	</div>
-
-
-	</fieldset>
 </form>
+
+<a href={{ url_for('delete', id = link.id) }}>Delete</a>
+
+{% endif %}
 {% endblock %}

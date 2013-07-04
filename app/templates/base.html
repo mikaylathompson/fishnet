@@ -47,30 +47,36 @@
 	{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
-				<div data-alert class="alert-box radius">
+			<div class="row">
+				<div data-alert class="alert-box radius large-6 large-offset-3">
 					{{ message }}
 				</div>
+			</div>
 			{% endfor %}
 		{% endif %}
 	{% endwith %}
 
 
-	{% block content %}
-	{% endblock %}
+	<div class="row">
+		<div class="large-10 large-offset-1">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</div>
 
 	<script>
 		document.write('<script src=' +
-		('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+		('__proto__' in {} ? '/static/js/vendor/zepto' : '/static/js/vendor/jquery') +
 		'.js><\/script>')
 		</script>
-		<script src="js/foundation/foundation.js"></script>
-		<script src="js/foundation/foundation.alerts.js"></script>
-		<script src="js/foundation/foundation.cookie.js"></script>
-		<script src="js/foundation/foundation.forms.js"></script>
-		<script src="js/foundation/foundation.joyride.js"></script>
-		<script src="js/foundation/foundation.placeholder.js"></script>
-		<script src="js/foundation/foundation.section.js"></script>
-		<script src="js/foundation/foundation.topbar.js"></script>
+		<script src="/static/js/foundation/foundation.js"></script>
+		<script src="/static/js/foundation/foundation.alerts.js"></script>
+		<script src="/static/js/foundation/foundation.cookie.js"></script>
+		<script src="/static/js/foundation/foundation.forms.js"></script>
+		<script src="/static/js/foundation/foundation.joyride.js"></script>
+		<script src="/static/js/foundation/foundation.placeholder.js"></script>
+		<script src="/static/js/foundation/foundation.section.js"></script>
+		<script src="/static/js/foundation/foundation.topbar.js"></script>
 		<script>
 			$(document).foundation();
 	</script>

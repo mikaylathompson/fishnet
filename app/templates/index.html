@@ -1,17 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{user.name}}'s fishnet:</h1>
+<h1 class="subheader">{{user.name}}'s fishnet</h1>
 Link to this fishnet: <a href={{ url_for('user', name=user.name) }}>{{user.name}}'s fishnet</a>
 
 {% for folder in sortedLinks.keys() %}
-	<h3>{{ folder.label }}</h3>
+	<fieldset>
+	<legend>
+		<a href="{{url_for('folder', name=g.user.name, label=folder.label)}}">{{folder.label}}</a>
+	</legend>
 	{% for link in sortedLinks[folder] %}
-		<a class=link href="{{link.url}}">{{link.title}}</a>
-		<p class=annotation>{{link.annotation}}
+		<h3 class="subheader">
+			<a class=link href="{{link.url}}">{{link.title}}</a>
+		<small> {{link.annotation}}
 			{% if link.user_id == user.id %}
-				<a href={{ url_for('delete', id = link.id) }}>delete</a>
-			{% endif %}
-		</p><br>
+			</small><small class="really-small">
+				   <a href={{ url_for('editlink', id = link.id) }}>edit</a>
+			{% endif %} 
+		</small>
+		</h3>
 	{% endfor %}
+	</fieldset>
 {% endfor %}
 {% endblock %}

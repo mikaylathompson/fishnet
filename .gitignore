@@ -1,0 +1,8 @@
+*.pyc
+*.db
+*.sql
+*.sqlite
+.DS_Store
+*.DS_Store?
+.Trashes
+/tmp/*

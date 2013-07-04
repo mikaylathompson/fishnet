@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{user.name}}'s fishnet:</h1>
+{% for link in links %}
+<a class=link href="{{link.url}}">{{link.title}}</a>
+<p class=annotation>{{link.annotation}}</p>
+{% endfor %}
+{% endblock %}

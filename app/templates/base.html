@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>
+{% if g.user.is_authenticated() %}
+	{{user.name}}--fishnet
+{% else %}
+	Welcome to fishnet
+{% endif %}
+ </title>
+</head>
+<body>
+<div class=nav>
+<a class=home-link href="{{ url_for('index') }}">fishnet</a>
+{% if g.user.is_authenticated() %}
+	| <a href="{{ url_for('user', name = g.user.name) }}">profile</a>
+	| <a href="{{ url_for('logout') }}">logout</a>
+{% endif %}
+</div>
+<hr>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+	{% for message in messages %}
+		<li>{{ message }}</li>
+	{% endfor %}
+{% endif %}
+{% endwith %}
+{% block content %} {% endblock %}
+</body>
+</html>

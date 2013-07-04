@@ -1,6 +1,6 @@
-from flask.ext.wtf import Form, TextAreaField, TextField, BooleanField
+from flask.ext.wtf import Form, TextAreaField, TextField, BooleanField, SelectField
 from flask.ext.wtf import Required, Length
-from app.models import User, Link
+from app.models import User, Link, Folder
 
 class LoginForm(Form):
 	openid = TextField('openid', validators = [Required()])
@@ -29,10 +29,18 @@ class NewLinkForm(Form):
 	title = TextField('title', validators = [Required()])
 	url = TextField('url', validators = [Required()])
 	annotation = TextAreaField('annotation', validators = [Length(min = 0, max = 499)])
+	folder = SelectField('folder') 
+
+	def validate_on_submit(self):
+		if self.title.data and self.url.data:
+			return True
+		else:
+			return False	
+
 	
-	def validate(self):
-#		if not Form.validate(self):
-#			return False
-		return True
- 
+
+class NewFolder(Form):
+	label = TextField('label', validators = [Required()])
+
+
 

@@ -46,6 +46,7 @@ class User(db.Model):
 class Folder(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	label = db.Column(db.String(64))
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	links = db.relationship('Link', backref='folder', lazy = 'dynamic')
 	
 class Link(db.Model):

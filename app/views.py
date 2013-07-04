@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm, EditForm, NewLinkForm
-from models import User, ROLE_USER, ROLE_ADMIN, Link
+from forms import LoginForm, EditForm, NewLinkForm, NewFolder
+from models import User, ROLE_USER, ROLE_ADMIN, Link, Folder
 from datetime import datetime
 
 @app.route('/')
@@ -10,11 +10,22 @@ from datetime import datetime
 @login_required
 def index():
 	user = g.user
+	folders = Folder.query.filter_by(user_id = g.user.id).all()
+	#make sure every link is in a folder.
+	for link in user.links:
+		if link.folder_id == None:
+			link.folder_id = 1
+	sortedLinks = {}
+	for f in folders:
+		sortedLinks[f] = f.links
+
 	links = Link.query.filter_by(user_id = g.user.id).order_by(Link.timestamp)	
 	return render_template("index.html",
 		title = 'Home',
 		user = user,
-		links = links)
+		links = links,
+		folders = folders,
+		sortedLinks = sortedLinks)
 
 @app.route('/login', methods = ['GET', 'POST'])
 @oid.loginhandler
@@ -42,7 +53,8 @@ def user(name):
 		flash('User' + name + ' not found.')
 		return redirect(url_for('index'))
 	links = Link.query.filter_by(user_id = user.id).order_by(Link.timestamp)	
-	return render_template('user.html', user = user, links = links)
+	folders = Folder.query.filter_by(user_id = user.id).all()
+	return render_template('user.html', user = user, links = links, folders = folders)
 
 @app.route('/edit', methods = ['GET', 'POST'])
 @login_required
@@ -64,8 +76,9 @@ def edit():
 @login_required
 def newlink():
 	form = NewLinkForm()
+	form.folder.choices = [(f.id, f.label) for f in g.user.folders.all()]
 	if form.url.data:
-		if form.validate():
+		if form.validate_on_submit():
 			url_raw = form.url.data
 			if url_raw[0:7] == 'http://':
 				url_clean = url_raw
@@ -73,15 +86,38 @@ def newlink():
 				url_clean = 'http://' + url_raw
 			title = form.title.data
 			annotation = form.annotation.data
+			if form.folder.data:
+				folder = int(form.folder.data)
+			else:
+				folder = 1
 			timestamp = datetime.utcnow()
 			user_id = g.user.id
-			link = Link(title = title, url = url_clean, annotation = annotation, timestamp = timestamp, user_id = user_id)
+			link = Link(title = title,
+				url = url_clean,
+				annotation = annotation, 
+				timestamp = timestamp,
+				folder_id = folder, 
+				user_id = user_id)
 			db.session.add(link)
 			db.session.commit()
 			flash('Link added.')
 			return redirect(url_for('index'))
-		flash('Mysterious error. The form didn\'t validate.')
+		flash('Mysterious error. The form didn\'t validate.  Make sure you have both a title and URL.')
 	return render_template('newlink.html', user = g.user, form = form)
+
+@app.route('/newfolder', methods = ['GET', 'POST'])
+@login_required
+def newfolder():
+	form = NewFolder()
+	if form.validate_on_submit():
+		folder = Folder(label = form.label.data, user_id = g.user.id)
+		db.session.add(folder)
+		db.session.commit()
+		flash('Folder added.')
+		return redirect(url_for('index'))
+	flash('The form wasn\'t created.  Try again.')
+	return render_template('newfolder.html', user = g.user, form = form)
+
 
 @app.route('/delete/<id>')
 @login_required
@@ -129,7 +165,9 @@ def after_login(resp):
 			name = resp.email.split('@')[0]
 		name = User.make_unique_name(name)
 		user = User(name = name, email = resp.email, role = ROLE_USER)
+		default_folder = Folder(label='default', user_id=user.id)
 		db.session.add(user)
+		db.session.add(default_folder)
 		db.session.commit()
 	remember_me = False
 	if 'remember_me' in session:

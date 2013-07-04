@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm, EditForm
-from models import User, ROLE_USER, ROLE_ADMIN
+from forms import LoginForm, EditForm, NewLinkForm
+from models import User, ROLE_USER, ROLE_ADMIN, Link
 from datetime import datetime
 
 @app.route('/')
@@ -10,19 +10,7 @@ from datetime import datetime
 @login_required
 def index():
 	user = g.user
-	links = [
-		{
-			'title': 'Google', 
-			'url': 'http://www.google.com',
-			'annotation': 'A great search engine.'
-		},
-		{
-			'title': 'Facebook',
-			'url': 'http://www.facebook.com',
-			'annotation': 'The world\'s most popular social network.'
-		}
-		]
-		
+	links = Link.query.filter_by(user_id = g.user.id).order_by(Link.timestamp)	
 	return render_template("index.html",
 		title = 'Home',
 		user = user,
@@ -53,10 +41,7 @@ def user(name):
 	if user == None:
 		flash('User' + name + ' not found.')
 		return redirect(url_for('index'))
-	links = [
-		{ 'author': user, 'title': 'Twitter', 'url': 'http://www.twitter.com', 'annotation': 'Microblogging platform.' },
-		{ 'author': user, 'title': 'Gmail', 'url': 'https://mail.google.com', 'annotation': 'Email application.' }
-	]
+	links = Link.query.filter_by(user_id = user.id).order_by(Link.timestamp)	
 	return render_template('user.html', user = user, links = links)
 
 @app.route('/edit', methods = ['GET', 'POST'])
@@ -74,6 +59,30 @@ def edit():
 		form.name.data = g.user.name
 		form.about_me.data = g.user.about_me
 	return render_template('edit.html', user = g.user, form = form)
+
+@app.route('/newlink', methods = ['GET', 'POST'])
+@login_required
+def newlink():
+	form = NewLinkForm()
+	if form.url.data:
+		if form.validate():
+			url_raw = form.url.data
+			if url_raw[0:7] == 'http://':
+				url_clean = url_raw
+			else:
+				url_clean = 'http://' + url_raw
+			title = form.title.data
+			annotation = form.annotation.data
+			timestamp = datetime.utcnow()
+			user_id = g.user.id
+			link = Link(title = title, url = url_clean, annotation = annotation, timestamp = timestamp, user_id = user_id)
+			db.session.add(link)
+			db.session.commit()
+			flash('Link added.')
+			return redirect(url_for('index'))
+		flash('Mysterious error. The form didn\'t validate.')
+	return render_template('newlink.html', user = g.user, form = form)
+
 #end of app.route
 
 @app.before_request

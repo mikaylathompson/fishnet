@@ -6,3 +6,4 @@
 *.DS_Store?
 .Trashes
 /tmp/*
+*.swp

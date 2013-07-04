@@ -1,13 +1,36 @@
 fishnet
 ======================
 
-fishnet is a simple link-gathering app. 
-Essentially, it's your bookmarks, but with annotations and the ability to share.
+fishnet is a simple link-gathering and sharing app. 
+Essentially, it's your bookmarks, but with annotations and the ability to share
+a link to particular folders or your entire profile.
 Your fishnet is where you can keep track of resources and readings, but
 it can also showcase what you're thinking about or working on at the moment.
-At the moment, admin is the only login, and there's only a main folder.
+
+Most of all, it's an exercise to learn/practice Flask, Python, and vim.
 
 To-do list:
-Allow registration
-Define per-user URLs to enable sharing
-Add tags
+Add folders
+Redo openid login (maybe just google account integration?)
+Appearance
+
+
+
+Notes on folders:
+Steps to add:
+1. Have an 'add folder' button
+	--Add to base.html
+	--Add to forms.py
+	--Create newfolder.html
+	--Add in views.py
+2. When adding a link, drop down to select folder
+	--Change in forms.py
+	--Add to newlink.html
+	--Change in views.py
+3. Add pages for folders (/user/<id>/<folder-name>)
+	--Add to views.py
+	--Create folder.html
+3. When viewing a profile, sort by folder
+	--Change user.html
+4. Move links between folders
+5. Delete folders

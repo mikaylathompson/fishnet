@@ -1,32 +1,78 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>
-{% if g.user.is_authenticated() %}
-	{{user.name}}--fishnet
-{% else %}
-	Welcome to fishnet
-{% endif %}
- </title>
+	<meta name="viewport" content="width=device-width" />
+		<title>
+		{% if g.user.is_authenticated() %}
+			fishnet--{{user.name}}
+		{% else %}
+			Welcome to fishnet
+		{% endif %}
+		 </title>
+	<link rel="stylesheet" href="/static/css/normalize.css" />
+	<link rel="stylesheet" href="/static/css/foundation.css" />
+	<script src="/static/js/custom.modernizr.js"></script>
 </head>
 <body>
-<div class=nav>
-<a class=home-link href="{{ url_for('index') }}">fishnet</a>
-{% if g.user.is_authenticated() %}
-	| <a href="{{ url_for('user', name = g.user.name) }}">profile</a>
-	| <a href="{{ url_for('newlink') }}"> Add a new link</a>
-	| <a href="{{ url_for('newfolder') }}">Add a new folder</a>
-	| <a href="{{ url_for('logout') }}">logout</a>
-{% endif %}
-</div>
-<hr>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul>
-	{% for message in messages %}
-		<li>{{ message }}</li>
-	{% endfor %}
-{% endif %}
-{% endwith %}
-{% block content %} {% endblock %}
+	<nav class="top-bar contain-to-grid sticky">
+		<ul class="title-area">
+			<li class="name">
+				<h1><a href="{{ url_for('index') }}">fishnet</a></h1>
+			</li>
+		</ul>
+		<section class="top-bar-section">
+		{% if g.user.is_authenticated() %}
+			<ul class="left">
+				<li class="divider"></li>
+				<li><a href="{{ url_for('newlink') }}"> Add Link</a></li>
+				<li class="divider"></li>
+				<li><a href="{{ url_for('newfolder') }}">Add Folder</a></li>
+				<li class="divider"></li>
+			</ul>
+			<ul class="right">
+				<li class="divider"></li>
+				<li><a href="{{ url_for('user', name = g.user.name) }}">Profile</a></li>
+				<li class="divider"></li>
+				<li><a href="{{ url_for('logout') }}">Logout</a></li>
+			</ul>
+		{% else %}
+			<ul class="right">
+				<li class="divider"></li>
+				<li><a href="{{ url_for('login') }}">Login</a></li>
+			</ul>
+		{% endif %}
+		</section>
+	</nav>
+	
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+				<div data-alert class="alert-box radius">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+
+
+	{% block content %}
+	{% endblock %}
+
+	<script>
+		document.write('<script src=' +
+		('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+		'.js><\/script>')
+		</script>
+		<script src="js/foundation/foundation.js"></script>
+		<script src="js/foundation/foundation.alerts.js"></script>
+		<script src="js/foundation/foundation.cookie.js"></script>
+		<script src="js/foundation/foundation.forms.js"></script>
+		<script src="js/foundation/foundation.joyride.js"></script>
+		<script src="js/foundation/foundation.placeholder.js"></script>
+		<script src="js/foundation/foundation.section.js"></script>
+		<script src="js/foundation/foundation.topbar.js"></script>
+		<script>
+			$(document).foundation();
+	</script>
 </body>
 </html>

@@ -13,8 +13,10 @@ def index():
 	folders = Folder.query.filter_by(user_id = g.user.id).all()
 	#make sure every link is in a folder.
 	for link in user.links:
-		if link.folder_id == None:
+		if link.folder_id is None:
 			link.folder_id = 1
+			db.session.add(link)
+	db.session.commit()
 	sortedLinks = {}
 	for f in folders:
 		sortedLinks[f] = f.links
@@ -80,7 +82,7 @@ def newlink():
 	if form.url.data:
 		if form.validate_on_submit():
 			url_raw = form.url.data
-			if url_raw[0:7] == 'http://':
+			if url_raw[0:7] == 'http://' or url_raw[0:8] == 'https://':
 				url_clean = url_raw
 			else:
 				url_clean = 'http://' + url_raw

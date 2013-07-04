@@ -11,7 +11,7 @@ Link to this fishnet: <a href={{ url_for('user', name=user.name) }}>{{user.name}
 			{% if link.user_id == user.id %}
 				<a href={{ url_for('delete', id = link.id) }}>delete</a>
 			{% endif %}
-		</p>
+		</p><br>
 	{% endfor %}
 {% endfor %}
 {% endblock %}

@@ -83,6 +83,20 @@ def newlink():
 		flash('Mysterious error. The form didn\'t validate.')
 	return render_template('newlink.html', user = g.user, form = form)
 
+@app.route('/delete/<id>')
+@login_required
+def delete(id):
+	link = Link.query.get(id)
+	if link.user_id == g.user.id:
+		#User has authority to delete link
+		db.session.delete(link)
+		db.session.commit()
+		flash('The link has been deleted.')
+	else:
+		#User doesn't have authority to delete
+		flash('You can\'t delete a post that\'s not yours.')
+	return redirect(url_for('index'))
+
 #end of app.route
 
 @app.before_request

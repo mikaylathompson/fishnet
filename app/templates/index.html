@@ -2,7 +2,11 @@
 {% block content %}
 <h1>{{user.name}}'s fishnet:</h1>
 {% for link in links %}
-<a class=link href="{{link.url}}">{{link.title}}</a>
-<p class=annotation>{{link.annotation}}</p>
+	<a class=link href="{{link.url}}">{{link.title}}</a>
+	<p class=annotation>{{link.annotation}}
+		{% if link.user_id == user.id %}
+			<a href={{ url_for('delete', id = link.id) }}>delete</a>
+		{% endif %}
+	</p>
 {% endfor %}
 {% endblock %}

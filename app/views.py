@@ -32,7 +32,7 @@ def index():
 @oid.loginhandler
 def login():
 	if g.user is not None and g.user.is_authenticated():
-		return redirect(url_for('index'))
+		return redirect(url_for('index', user = g.user))
 	form = LoginForm()
 	if form.validate_on_submit():
 		session['remember_me'] = form.remember_me.data
@@ -62,7 +62,7 @@ def user(name):
 @app.route('/edit', methods = ['GET', 'POST'])
 @login_required
 def edit():
-	form = EditForm()
+	form = EditForm(g.user.name)
 	if form.validate_on_submit():
 		g.user.name = form.name.data
 		g.user.about_me = form.about_me.data
@@ -83,6 +83,15 @@ def before_request():
 		g.user.last_seen = datetime.utcnow()
 		db.session.add(g.user)
 		db.session.commit()
+
+@app.errorhandler(404)
+def internal_error(error):
+	return render_template('404.html', user = g.user), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+	db.session.rollback()
+	return render_template('500.html', user = g.user), 500
 #end of app.
 
 @oid.after_login
@@ -95,6 +104,7 @@ def after_login(resp):
 		name = resp.name
 		if name is None or name == "":
 			name = resp.email.split('@')[0]
+		name = User.make_unique_name(name)
 		user = User(name = name, email = resp.email, role = ROLE_USER)
 		db.session.add(user)
 		db.session.commit()

@@ -27,6 +27,18 @@ class User(db.Model):
 	def __repr__(self):
 		return '<USER %r>' % (self.name)
 
+	@staticmethod
+	def make_unique_name(name):
+		if User.query.filter_by(name = name).first() == None:
+			return name
+		version = 2
+		while True:
+			newName = name + str(version)
+			if User.query.filter_by(name = newName).first() == None:
+				break
+			version += 1
+		return newName
+
 class Link(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	title = db.Column(db.String(64))

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="subheading">Welcome to fishnet</h1>
+<h4 class="subheading">
+	Fishnet is a site for catching and sharing the websites that matter to you.<br>
+	Within folders, you can collect and annotate links and then share them with others.<br>
+	It can be used as personal bookmarks, of course, but it can also tell people
+	what you're interested in, function as a portfolio, or be a curated reading list.<br><br>
+</h4>
+<h3 class="subheading">
+	To get started, <a href="{{ url_for('login')}}">login</a> or <a href="{{ url_for('register')}}">register</a>.
+</h3>
+
+
+{% endblock %}

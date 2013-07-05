@@ -8,23 +8,40 @@ import hashlib
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
-	user = g.user
-	#make sure every link is in a folder.
-	for link in user.links:
-		if link.folder_id is None:
-			link.folder_id = 1
-			db.session.add(link)
-	db.session.commit()
-	folders = Folder.query.filter_by(user_id = g.user.id).all()
-	sortedLinks = {}
-	for f in folders:
-		sortedLinks[f] = f.links
-	links = Link.query.filter_by(user_id = g.user.id).order_by(Link.timestamp)	
-	return render_template("index.html",
-		user = user,
-		sortedLinks = sortedLinks)
+	if g.user != None and g.user.is_authenticated:
+		user = g.user
+		#make sure every link is in a folder.
+		for link in user.links:
+			if link.folder_id is None:
+				link.folder_id = 1
+				db.session.add(link)
+		db.session.commit()
+		folders = Folder.query.filter_by(user_id = g.user.id).all()
+		sortedLinks = {}
+		for f in folders:
+			sortedLinks[f] = f.links
+		links = Link.query.filter_by(user_id = g.user.id).order_by(Link.timestamp)	
+		return render_template("index.html",
+			user = user,
+			sortedLinks = sortedLinks)
+	else:
+		return render_template('welcome.html')
+
+@app.route('/admin')
+@login_required
+def admin():
+	u = g.user
+	if u.email == 'mikayla.thompson@yale.edu' or u.email == 'mt1993@gmail.com':
+		users = User.query.all()
+		return render_template('admin.html',
+			users = users)
+	else:
+		flash('You\'re not authorized to view that page.  If you believe that\'s in error, '
+			'you should have the authority to go in and edit the code yourself.')
+		return redirect(url_for('index'))
+
+
 
 @app.route('/login', methods = ['GET', 'POST'])
 @oid.loginhandler
@@ -110,7 +127,6 @@ def folder(name, label):
 	return render_template('folder.html', 
 		user = user, 
 		folder = folder)
-
 
 @app.route('/edit', methods = ['GET', 'POST'])
 @login_required

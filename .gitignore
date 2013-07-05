@@ -8,3 +8,4 @@
 /tmp/*
 *.swp
 db_repository/versions/*
+venv/*

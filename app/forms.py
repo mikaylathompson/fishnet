@@ -36,47 +36,15 @@ class NewLinkForm(Form):
 			print 'Error in title.'
 			return False
 		if self.url.errors:
-                        print 'Error in url.'
-                        return False
-		if self.annotation.errors:
-                        print 'Error in annotation.'
-                        return False
-		if self.folder.errors:
-                        print 'Error in folder.'
-                        return False
-		return True
-
-class EditLinkForm(Form):
-	title = TextField('title', validators = [InputRequired(message='Enter a title.'), ])
-	url = TextField('url', validators = [InputRequired(message='Enter a URL.'), URL(require_tld=False, message="Not a valid URL.")])
-	annotation = TextAreaField('annotation', validators = [Length(min = 0, max = 499)])
-	folder = SelectField('folder', validators = [InputRequired(message='Choose a folder.')]) 
-
-	def validate_on_submit(self):
-		if self.title.errors:
-			print 'Error in title.'
+			print 'Error in url.'
 			return False
-		if self.url.errors:
-                        print 'Error in url.'
-                        return False
 		if self.annotation.errors:
-                        print 'Error in annotation.'
-                        return False
+			print 'Error in annotation.'
+			return False
 		if self.folder.errors:
-                        print 'Error in folder.'
-                        return False
+			print 'Error in folder.'
+			return False
 		return True
-
-#	def validate_on_submit(self):
-#		if self.title.data and self.url.data and self.folder.data:
-#			return True
-#		if not self.url.data:
-#			self.url.errors.append('Enter a url.')
-#		if not self.title.data:
-#			raise ValidationError('Enter a title.')
-#		return False	
-
-	
 
 class NewFolder(Form):
 	label = TextField('label', validators = [Required()])

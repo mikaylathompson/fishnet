@@ -1870,7 +1870,7 @@ form.custom {
   overflow: hidden;
   height: 60px;
   line-height: 60px;
-  position: relative;
+  position: fixed;
   background: #111111;
   margin-bottom: 1.875em; }
   .top-bar ul {

@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm, EditForm, NewLinkForm, EditLinkForm, NewFolder
+from forms import LoginForm, EditForm, NewLinkForm, NewFolder
 from models import User, ROLE_USER, ROLE_ADMIN, Link, Folder
 from datetime import datetime
 
@@ -90,40 +90,6 @@ def edit():
 		form.about_me.data = g.user.about_me
 	return render_template('edit.html', user = g.user, form = form)
 
-@app.route('/link/<id>', methods = ['GET', 'POST'])
-@login_required
-def editlink(id):
-	link = Link.query.get(id)
-	if link == None:
-		flash('That link doesn\'t exist.')
-		return redirect(url_for('index', user = g.user))
-	if link.user_id == g.user.id:
-		form = EditLinkForm()
-		if form.validate_on_submit():
-			if form.url.data != link.url and form.url.data != None:
-				url_raw = form.url.data
-				if url_raw[0:7] == 'http://' or url_raw[0:8] == 'https://':
-					url_clean = url_raw
-				else:
-					url_clean = 'http://' + url_raw
-				link.folder = form.url_clean
-			link.title = form.title.data
-			link.annotation = form.annotation.data
-			print "CAN ANYONE HEAR ME?!?"
-			print form.folder.data
-			if form.folder.data != None:
-				link.folder = int(form.folder.data)
-			db.session.add(link)
-			db.session.commit()
-			flash('Your changes have been saved.')
-			return redirect(url_for('user', name = g.user.name))
-		else:
-			form.title.data = link.title
-			form.url.data = link.url
-			form.annotation.data = link.annotation
-			# form.folder.data = link.folder
-	return render_template('link.html', link = link, user = g.user, form = form)
-
 @app.route('/newlink', methods = ['GET', 'POST'])
 @login_required
 def newlink():
@@ -176,14 +142,17 @@ def newfolder():
 @login_required
 def delete(id):
 	link = Link.query.get(id)
-	if link.user_id == g.user.id:
-		#User has authority to delete link
-		db.session.delete(link)
-		db.session.commit()
-		flash('The link has been deleted.')
+	if link == None:
+		flash('That link doesn\'t exist.')
 	else:
-		#User doesn't have authority to delete
-		flash('You can\'t delete a post that\'s not yours.')
+		if link.user_id == g.user.id:
+			#User has authority to delete link
+			db.session.delete(link)
+			db.session.commit()
+			flash('The link has been deleted.')
+		else:
+			#User doesn't have authority to delete
+			flash('You can\'t delete a link that\'s not yours.')
 	return redirect(url_for('index'))
 
 #end of app.route

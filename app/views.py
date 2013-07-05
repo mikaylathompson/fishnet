@@ -66,6 +66,7 @@ def register():
 		passhash = hashlib.sha224(form.pswd.data + form.email.data).hexdigest()
 		user = User(email = email, name = name, passhash = passhash, role = ROLE_USER)
 		db.session.add(user)
+		db.session.commit()
 		folder = Folder(label = 'Default', user_id = user.id)
 		db.session.add(folder)
 		db.session.commit()

@@ -9,28 +9,8 @@ it can also showcase what you're thinking about or working on at the moment.
 
 Most of all, it's an exercise to learn/practice Flask, Python, and vim.
 
-To-do list:
-Add folders
-Redo openid login (maybe just google account integration?)
-Appearance
 
 
+And we're live!!  Fishnet can be accessed at http://fishnet-links.herokuapp.com
 
-Notes on folders:
-Steps to add:
-1. Have an 'add folder' button
-	--Add to base.html
-	--Add to forms.py
-	--Create newfolder.html
-	--Add in views.py
-2. When adding a link, drop down to select folder
-	--Change in forms.py
-	--Add to newlink.html
-	--Change in views.py
-3. Add pages for folders (/user/<id>/<folder-name>)
-	--Add to views.py
-	--Create folder.html
-3. When viewing a profile, sort by folder
-	--Change user.html
-4. Move links between folders
-5. Delete folders
+

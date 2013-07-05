@@ -1,10 +1,18 @@
-from flask.ext.wtf import Form, TextAreaField, TextField, BooleanField, SelectField
+from flask.ext.wtf import Form, TextAreaField, TextField, BooleanField, SelectField, PasswordField
 from flask.ext.wtf import Required, Length, ValidationError, URL, InputRequired
 from app.models import User, Link, Folder
 
 class LoginForm(Form):
-	openid = TextField('openid', validators = [Required()])
+	# openid = TextField('openid', validators = [Required()])
 	remember_me = BooleanField('remember_me', default = False)
+	email = TextField('email', validators = [Required()])
+	pswd = PasswordField('pswd', validators = [Length(min = 5, max=25)])
+
+class RegisterForm(Form):
+	email = TextField('email', validators = [Required()])
+	name = TextField('name', validators = [Required()])
+	pswd = PasswordField('pswd', validators = [Length(min = 5, max=25)])
+ 
 
 class EditForm(Form):
 	name = TextField('name', validators = [Required()])

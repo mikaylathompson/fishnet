@@ -10,6 +10,7 @@ class User(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	name = db.Column(db.String(64), index = True, unique = True)
 	email = db.Column(db.String(120), index = True, unique = True)
+	passhash = db.Column(db.String(60))
 	role = db.Column(db.SmallInteger, default = ROLE_USER)
 	folders = db.relationship('Folder', backref = 'owner', lazy = 'dynamic')
 	links = db.relationship('Link', backref = 'author', lazy = 'dynamic')

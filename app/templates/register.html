@@ -2,9 +2,15 @@
 
 {% block content %}
 
-<h1 class="subheader"> Sign In </h1>
-<form action='' method='post' name='login'>
+<h1 class="subheader"> Register </h1>
+<form action='' method='post' name='register'>
 	{{form.hidden_tag()}}
+	<div class="row">
+		<div class="small-6 small-offset-1 columns">
+			<label>Name:</label>
+			{{ form.name(size=40) }}
+		</div>
+	</div>
 	<div class="row">
 		<div class="small-6 small-offset-1 columns">
 			<label>Email:</label>

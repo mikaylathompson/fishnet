@@ -1,9 +1,10 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm, EditForm, NewLinkForm, NewFolder
+from forms import LoginForm, EditForm, NewLinkForm, NewFolder, RegisterForm
 from models import User, ROLE_USER, ROLE_ADMIN, Link, Folder
 from datetime import datetime
+import hashlib
 
 @app.route('/')
 @app.route('/index')
@@ -32,11 +33,47 @@ def login():
 		return redirect(url_for('index', user = g.user))
 	form = LoginForm()
 	if form.validate_on_submit():
-		session['remember_me'] = form.remember_me.data
-		return oid.try_login(form.openid.data, ask_for = ['email']) # ['name', 'email'])
-	return render_template('login.html',
-		form = form,
-		providers = app.config['OPENID_PROVIDERS'])
+		user = User.query.filter_by(email = form.email.data).first()
+		if user == None:
+			flash('Email isn\'t found.  Register instead?')
+			return redirect(url_for('register'))
+		else:
+			passhash = hashlib.sha224(form.pswd.data + user.email).hexdigest()
+			if passhash == user.passhash:
+				login_user(user)
+				flash("Logged in successfully.")
+	        	return redirect(request.args.get("next") or url_for("index"))
+	        if form.email.data != None:
+		        flash('Incorrect email or password.')
+	return render_template('login.html', form = form)
+
+
+@app.route('/register', methods = ['GET', 'POST'])
+def register():
+	if g.user is not None and g.user.is_authenticated():
+		flash('You\'re already logged in.')
+		return redirect(url_for('index'))
+	form = RegisterForm()
+	if form.validate_on_submit():
+		if User.query.filter_by(email = form.email.data).first() != None:
+			flash('This email is already registered.  Login instead.')
+			return(redirect(url_for('login')))
+		if User.query.filter_by(name = form.name.data).first() != None:
+			flash('That name is taken.  Try another.')
+			return render_template('register.html', form = form)
+		email = form.email.data
+		name = form.name.data
+		passhash = hashlib.sha224(form.pswd.data + form.email.data).hexdigest()
+		user = User(email = email, name = name, passhash = passhash, role = ROLE_USER)
+		db.session.add(user)
+		folder = Folder(label = 'Default', user_id = user.id)
+		db.session.add(folder)
+		db.session.commit()
+		login_user(user)
+		flash("You've successfully registered.")
+		return redirect(url_for('index'))
+	return render_template('register.html', form = form)
+
 
 @app.route('/logout')
 def logout():
@@ -79,7 +116,6 @@ def folder(name, label):
 def edit():
 	form = EditForm(g.user.name)
 	if form.validate_on_submit():
-		g.user.name = form.name.data
 		g.user.about_me = form.about_me.data
 		db.session.add(g.user)
 		db.session.commit()
@@ -120,7 +156,7 @@ def newlink():
 			db.session.commit()
 			flash('Link added.')
 			return redirect(url_for('index'))
-		flash('Mysterious error. The form didn\'t validate.  Make sure you have both a title and URL.')
+		flash('The form didn\'t validate.  Make sure you have both a title and URL.')
 	return render_template('newlink.html', user = g.user, form = form)
 
 @app.route('/newfolder', methods = ['GET', 'POST'])
@@ -187,9 +223,7 @@ def after_login(resp):
 			name = resp.email.split('@')[0]
 		name = User.make_unique_name(name)
 		user = User(name = name, email = resp.email, role = ROLE_USER)
-		default_folder = Folder(label='default', user_id=user.id)
 		db.session.add(user)
-		db.session.add(default_folder)
 		db.session.commit()
 	remember_me = False
 	if 'remember_me' in session:

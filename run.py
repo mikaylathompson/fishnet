@@ -2,4 +2,4 @@
 import os
 from flask import Flask
 from app import app
-app.run(debug = False)
+app.run(debug = True)

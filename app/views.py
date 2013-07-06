@@ -9,7 +9,8 @@ import hashlib
 @app.route('/')
 @app.route('/index')
 def index():
-	if g.user != None and g.user.is_authenticated:
+	try:
+		name = g.user.name
 		user = g.user
 		#make sure every link is in a folder.
 		for link in user.links:
@@ -25,15 +26,18 @@ def index():
 		return render_template("index.html",
 			user = user,
 			sortedLinks = sortedLinks)
-	else:
+	except AttributeError:
 		return render_template('welcome.html')
+		
 
 @app.route('/admin')
 @login_required
 def admin():
 	u = g.user
 	if u.email == 'mikayla.thompson@yale.edu' or u.email == 'mt1993@gmail.com':
-		users = User.query.all()
+		users = []
+		for u in User.query.all():
+			users.append(str(u.name))
 		return render_template('admin.html',
 			users = users)
 	else:

@@ -10,7 +10,7 @@
 		{% endif %}
 		 </title>
 	<link rel="stylesheet" href="/static/css/normalize.css" />
-	<link rel="stylesheet" href="/static/css/foundation.css" />
+	<link rel="stylesheet" href="/static/css/foundation.css/?v=2" />
 	<script src="/static/js/custom.modernizr.js"></script>
 </head>
 <body>
@@ -49,17 +49,18 @@
 	{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
-			<div class="row">
+			<div class="row bigrowtop">
 				<div data-alert class="alert-box radius large-6 large-offset-3">
 					{{ message }}
 				</div>
 			</div>
 			{% endfor %}
-		{% endif %}
-	{% endwith %}
-
 
 	<div class="row">
+		{% else %}
+	<div class="row rowtop">
+		{% endif %}
+	{% endwith %}
 		<div class="large-10 large-offset-1">
 			{% block content %}
 			{% endblock %}

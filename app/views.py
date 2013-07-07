@@ -116,6 +116,7 @@ def user(name):
 	folders = Folder.query.filter_by(user_id = user.id).all()
 	return render_template('user.html', 
 		user = user, 
+		viewer = g.user,
 		sortedLinks = sortedLinks)
 
 @app.route('/user/<name>/folder/<label>')

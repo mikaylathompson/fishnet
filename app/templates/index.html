@@ -9,7 +9,7 @@
 	</legend>
 	{% for link in sortedLinks[folder] %}
 		<h3 class="subheader">
-			<a class=link href="{{link.url}}">{{link.title}}</a>
+			<a class=link href="{{link.url}}" target="_blank">{{link.title}}</a>
 		<small> {{link.annotation}}
 			{% if link.user_id == user.id %}
 			</small><small class="really-small">

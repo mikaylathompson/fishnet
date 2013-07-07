@@ -7,12 +7,14 @@
 	<small>
 		<br>{{user.about_me}}
 	</small>
+	{% endif %}
 	<small class="really-small">
-		{% if user.id == g.user.id %}
+		{% if user.id == viewer.id %}
+			{{viewer.email}}
 			<a href="{{url_for('edit', user = g.user.id)}}">Edit</a>
 		{% endif %}
 	</small>
-	{% endif %}
+	
 </h2>
 <!-- {% if user.last_seen %}<em>Last seen on: {{user.last_seen}} </em>{% endif %} -->
 
@@ -24,7 +26,7 @@
 	</legend>
 	{% for link in sortedLinks[folder] %}
 		<h3 class="subheader">
-			<a class=link href="{{link.url}}">{{link.title}}</a>
+			<a class=link href="{{link.url}}" target="_blank">{{link.title}}</a>
 		<small> {{link.annotation}}
 			{% if link.user_id == g.user.id %}
 			</small><small class="really-small">

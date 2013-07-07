@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
 from forms import LoginForm, EditForm, NewLinkForm, NewFolder, RegisterForm
-from models import User, ROLE_USER, ROLE_ADMIN, Link, Folder
+from models import User, Link, Folder, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
 import hashlib
 
@@ -37,7 +37,7 @@ def admin():
 	if u.email == 'mikayla.thompson@yale.edu' or u.email == 'mt1993@gmail.com':
 		users = []
 		for user in User.query.all():
-			users.append(user.name)
+			users.append(user)
 		return render_template('admin.html',
 			user = u,
 			users = users)
@@ -163,10 +163,10 @@ def newlink():
 				url_clean = 'http://' + url_raw
 			title = form.title.data
 			annotation = form.annotation.data
-			if form.folder.data == None:
-				folder = 1
-			else:
+			try:
 				folder = int(form.folder.data)
+			except ValueError:
+				folder = g.user.folders.all()[0].id
 			timestamp = datetime.utcnow()
 			user_id = g.user.id
 			link = Link(title = title,

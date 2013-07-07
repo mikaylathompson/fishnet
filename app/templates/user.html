@@ -13,9 +13,17 @@
 			{{viewer.email}}
 			<a href="{{url_for('edit', user = g.user.id)}}">Edit</a>
 		{% else %}
-			<a href="{{url_for('connect', userid = user.id)}}">Connect to {{user.name}}</a>
-
-
+			{% with folder = viewer.folders.filter_by(label = 'Connections').first() %}
+			{% with address = url_for('user', name = user.name) %}
+			{% with connected = folder.links.filter_by(url = address).all() %}
+			{% if connected[0] %}
+				Connected
+			{% else %}
+				<a href="{{url_for('connect', userid = user.id)}}">Connect to {{user.name}}</a>
+			{% endif %}
+			{% endwith %}
+			{% endwith %}
+			{% endwith %}
 		{% endif %}
 	</small>
 	

@@ -36,9 +36,10 @@ def admin():
 	u = g.user
 	if u.email == 'mikayla.thompson@yale.edu' or u.email == 'mt1993@gmail.com':
 		users = []
-		for u in User.query.all():
-			users.append(str(u.name))
+		for user in User.query.all():
+			users.append(user.name)
 		return render_template('admin.html',
+			user = u,
 			users = users)
 	else:
 		flash('You\'re not authorized to view that page.  If you believe that\'s in error, '

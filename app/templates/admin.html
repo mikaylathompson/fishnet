@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1 class="subheader">Users:</h1>
 
 <ul>
-{{for u in users}}
-	<li><a href={{ url_for('user', name = u) }}>{{ u }}</a></li>
+{% for u in users %}
+<!-- 	<li><a href={{ url_for('user', name = u.name) }}>{{ u.name }}</a></li>  If u = a User object -->
+	<li><a href={{ url_for('user', name = u) }}>{{ u }}</a></li>  <!-- If u = a User.name string -->
+{% endfor %}
 {% endblock %}

@@ -89,8 +89,11 @@ def register():
 		user = User(email = email, name = name, passhash = passhash, role = ROLE_USER)
 		db.session.add(user)
 		db.session.commit()
-		folder = Folder(label = 'Default', user_id = user.id)
-		db.session.add(folder)
+		default = Folder(label = 'Default', user_id = user.id)
+		db.session.add(default)
+		db.session.commit()
+		conns = Folder(label = 'Connections', user_id = user.id)
+		db.session.add(conns)
 		db.session.commit()
 		login_user(user)
 		flash("You've successfully registered.")
@@ -195,6 +198,34 @@ def newfolder():
 			return redirect(url_for('index'))
 		flash('The form wasn\'t created.  Try again.')
 	return render_template('newfolder.html', user = g.user, form = form)
+
+@app.route('/connect/<userid>')
+@login_required
+def connect(userid):
+	u = User.query.get(userid)
+	#Make a connections folder if they don't have one:
+	if len(g.user.folders.all()) < 2:
+		conns = Folder(label = 'Connections', user_id = g.user.id)
+		db.session.add(conns)
+		db.session.commit()
+	title = str(u.name) + '\'s fishnet'
+	url = url_for('user', name = u.name)
+	annotation = str(u.name) + '\'s fishnet'
+	timestamp = datetime.utcnow()
+	folder = Folder.query.get(g.user.folders.all()[1].id)
+	link = Link(title = title,
+				url = url,
+				annotation = annotation, 
+				timestamp = timestamp,
+				folder_id = folder.id, 
+				user_id = g.user.id)
+	db.session.add(link)
+	db.session.commit()
+	return redirect(url_for('folder',
+		name = g.user.name,
+		label = folder.label))
+
+
 
 
 @app.route('/delete/<id>')

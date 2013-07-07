@@ -12,6 +12,10 @@
 		{% if user.id == viewer.id %}
 			{{viewer.email}}
 			<a href="{{url_for('edit', user = g.user.id)}}">Edit</a>
+		{% else %}
+			<a href="{{url_for('connect', userid = user.id)}}">Connect to {{user.name}}</a>
+
+
 		{% endif %}
 	</small>
 	

@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="subheader"> An unexpected error has occurred</h1>
+<h1 class="subheader"> An unexpected error has occurred.</h1>
+<h3 class="subheader"> 
+	Sorry about that.  If you got this after adding a link, make sure you selected a folder for it.
+</h3><br>
 <p><a href={{url_for('index')}}>Fishnet Home</a></p>
 {% endblock %}

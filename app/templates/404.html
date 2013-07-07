@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="subheader">File Not Found</h1>
+<h1 class="subheader">  It seems like that page you're trying to reach doesn't exist.
+</h1>
+<h3 class="subheader">  
+	If it helps, user pages are at http://fishnet-links.herokuapp.com/user/[a user's name],
+	and folders are at http://fishnet-links.herokuapp.com/user/[owner's name]/folder/[the folder's label].
+
 <p><a href={{url_for('index')}}>Fishnet Home</a></p>
 {% endblock %}

@@ -18,7 +18,7 @@ def index():
 				link.folder_id = 1
 				db.session.add(link)
 		db.session.commit()
-		folders = Folder.query.filter_by(user_id = g.user.id).all()
+		folders = Folder.query.filter_by(user_id = g.user.id).order_by(Folder.id).all()
 		sortedLinks = {}
 		for f in folders:
 			sortedLinks[f] = f.links
@@ -212,7 +212,7 @@ def connect(userid):
 	url = url_for('user', name = u.name)
 	annotation = str(u.name) + '\'s fishnet'
 	timestamp = datetime.utcnow()
-	folder = Folder.query.get(g.user.folders.all()[1].id)
+	folder = Folder.query.get(g.user.folders.order_by(Folder.id).all()[1].id)
 	link = Link(title = title,
 				url = url,
 				annotation = annotation, 

@@ -49,6 +49,9 @@ class Folder(db.Model):
 	label = db.Column(db.String(64))
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	links = db.relationship('Link', backref='folder', lazy = 'dynamic')
+
+	def __repr__(self):
+		return '<Folder %r>' % (self.label)
 	
 class Link(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
@@ -60,7 +63,7 @@ class Link(db.Model):
 	folder_id = db.Column(db.Integer, db.ForeignKey('folder.id'))
 
 	def __repr__(self):
-		return '<Post %r>' % (self.title)
+		return '<Link %r>' % (self.title)
 
 
 

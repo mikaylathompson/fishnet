@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="subheader">Edit link:</h1>
+<form action="" method="post" name="newlink">
+	<fieldset>
+		<legend>New Link</legend>
+	{{ form.hidden_tag() }}
+
+	<div class="row">
+		<div class="small-10 small-offset-1 columns">
+			<h4 class="subheader">Title: {{ link.title }}</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-10 small-offset-1 columns">
+			<h4 class="subheader">URL: <a href="{{ link.url }}" target="_blank">{{ link.url }}</a></h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-10 small-offset-1 columns">
+			<label>Annotation</label>
+			{{ form.annotation(cols=50, rows=8) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-4 small-offset-1 columns">
+			<label>Folder</label>
+			{{ form.folder(size=5) }}
+			{% if form.folder.errors %}
+				<small class="error">Invalid entry</small>
+			{% endif %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-2 small-offset-1 columns">
+			<input type="submit" value="Save Changes" class="button">
+		</div>
+	</div>
+
+	<h3 class="subheader"><a href="{{ url_for('deletelink', id = link.id) }}">Delete Link</a></h3>
+
+	</fieldset>
+</form>
+
+{% endblock %}

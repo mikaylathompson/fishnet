@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm, EditForm, NewLinkForm, NewFolder, RegisterForm
+from forms import LoginForm, EditForm, NewLinkForm, NewFolder, RegisterForm, EditLinkForm
 from models import User, Link, Folder, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
 import hashlib
@@ -185,6 +185,33 @@ def newlink():
 		flash('The form didn\'t validate.  Make sure you have both a title and URL.')
 	return render_template('newlink.html', user = g.user, form = form)
 
+@app.route('/editlink/<id>', methods = ['GET', 'POST'])
+@login_required
+def editlink(id):
+	try:
+		link = Link.query.get(id)
+		if link.user_id != g.user.id:
+			flash('You don\'t have permission to edit that link.')
+			return redirect(url_for('index'))
+		form = EditLinkForm()
+		form.folder.choices = [(f.id, f.label) for f in g.user.folders.all()]
+		if form.validate_on_submit() and form.annotation.data != None:
+			link.annotation = form.annotation.data
+			try:
+				link.folder_id = int(form.folder.data)
+			except ValueError:
+				pass
+			db.session.add(link)
+			db.session.commit()
+			flash('Your changes have been saved.')
+			return redirect(url_for('index'))
+		form.annotation.data = link.annotation
+		return render_template('editlink.html', user = g.user, form = form, link = link)
+	except AttributeError:
+		flash('Link does not exist.')
+		return redirect(url_for('index'))
+
+
 @app.route('/newfolder', methods = ['GET', 'POST'])
 @login_required
 def newfolder():
@@ -226,11 +253,9 @@ def connect(userid):
 		label = folder.label))
 
 
-
-
-@app.route('/delete/<id>')
+@app.route('/deletelink/<id>')
 @login_required
-def delete(id):
+def deletelink(id):
 	link = Link.query.get(id)
 	if link == None:
 		flash('That link doesn\'t exist.')

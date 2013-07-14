@@ -10,11 +10,11 @@
 {% for link in folder.links %}
 	<fieldset class="link">
 		<h3 class="subheader">
-			<a class=link href="{{link.url}}">{{link.title}}</a>
+			<a class=link href="{{link.url}}" target="_blank">{{link.title}}</a>
 		<small> {{link.annotation}}
 			{% if link.user_id == g.user.id %}
 			</small><small class="really-small">
-				   <a href={{ url_for('delete', id = link.id) }}>X</a>
+				   <a href={{ url_for('editlink', id = link.id) }}>edit</a>
 			{% endif %} 
 		</small>
 		</h3>

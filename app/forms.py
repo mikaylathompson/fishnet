@@ -54,6 +54,20 @@ class NewLinkForm(Form):
 			return False
 		return True
 
+class EditLinkForm(Form):
+	annotation = TextAreaField('annotation', validators = [Length(min = 0, max = 499)])
+	folder = SelectField('folder', validators = [InputRequired(message='Choose a folder.')]) 
+
+	def validate_on_submit(self):
+		if self.annotation.errors:
+			print 'Error in annotation.'
+			return False
+		if self.folder.errors:
+			print 'Error in folder.'
+			return False
+		return True
+
+
 class NewFolder(Form):
 	label = TextField('label', validators = [Required()])
 

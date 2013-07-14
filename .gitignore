@@ -11,3 +11,4 @@ db_repository/versions/*
 venv/*
 app.yaml
 run-on-gae.py
+*.sublime*

@@ -33,6 +33,10 @@ class EditForm(Form):
 			return False
 		return True
 
+class ChangePassForm(Form):
+	oldPass = PasswordField('old', validators = [Required()])
+	newPass = PasswordField('new', validators = [Length(min = 5, max=25)])
+
 class NewLinkForm(Form):
 	title = TextField('title', validators = [InputRequired(message='Enter a title.'), ])
 	url = TextField('url', validators = [InputRequired(message='Enter a URL.'), URL(require_tld=False, message="Not a valid URL.")])

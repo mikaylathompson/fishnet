@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="subheader">Change Password</h1>
+
+<form action='' method='post' name='changepass'>
+	{{form.hidden_tag()}}
+	<div class="row">
+		<div class="small-6 small-offset-1 columns">
+			<label>Current Password:</label>
+			{{ form.oldPass(size=40) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-4 small-offset-1 columns">
+			<label>New Password:</label>
+			{{ form.newPass(size=40) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-3 small-offset-1 columns">
+			<input type="submit" value="Change" class="button">
+		</div>
+	</div>
+</form>
+
+
+{% endblock %}

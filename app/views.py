@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from forms import LoginForm, EditForm, NewLinkForm, NewFolder, RegisterForm, EditLinkForm
+from forms import LoginForm, EditForm, NewLinkForm, NewFolder, RegisterForm, EditLinkForm, ChangePassForm
 from models import User, Link, Folder, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
 import hashlib
@@ -151,6 +151,29 @@ def edit():
 		form.name.data = g.user.name
 		form.about_me.data = g.user.about_me
 	return render_template('edit.html', user = g.user, form = form)
+
+@app.route('/changepass', methods = ['GET', 'POST'])
+@login_required
+def changepass():
+	form = ChangePassForm()
+	user = g.user
+	if form.validate_on_submit():
+		oldhash = hashlib.sha224(form.oldPass.data + user.email).hexdigest()
+		if oldhash == user.passhash:
+			newhash = hashlib.sha224(form.newPass.data + user.email).hexdigest()
+			user.passhash = newhash
+			db.session.add(user)
+			db.session.commit()
+			flash('Your changes have been saved.')
+			return redirect(url_for('user', name = g.user.name))
+		else:
+			flash('Current password was incorrect.')
+			return redirect(url_for('changepass'))
+	else:
+		return render_template('changepass.html', user = g.user, form = form)
+
+
+
 
 @app.route('/newlink', methods = ['GET', 'POST'])
 @login_required

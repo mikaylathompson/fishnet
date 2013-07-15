@@ -11,7 +11,7 @@
 	<small class="really-small">
 		{% if user.id == viewer.id %}
 			{{viewer.email}}
-			<a href="{{url_for('edit', user = g.user.id)}}">Edit</a> 
+			<a href="{{url_for('edit', user = g.user.id)}}">Edit</a> -- 
 			<a href="{{ url_for('changepass') }}">Change Password</a>
 		{% else %}
 			{% with folder = viewer.folders.filter_by(label = 'Connections').first() %}

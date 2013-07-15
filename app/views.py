@@ -127,7 +127,7 @@ def user(name):
 def folder(name, label):
 	user = User.query.filter_by(name = name).first()
 	if user == None:
-		flash('User' + name + ' not found.')
+		flash('User ' + name + ' not found.')
 		return redirect(url_for('index'))
 	folder = Folder.query.filter_by(label = label, user_id=user.id).first()
 	if folder == None:

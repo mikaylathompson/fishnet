@@ -83,6 +83,16 @@ textarea {
 select {
   width: 100%; }
 
+div.footer {
+  line-height: 2.5;
+  font-weight: 100;
+  margin-top: 0.5em;
+  letter-spacing: 1px;
+  background: #111111;
+  text-align: center;
+  color: #bbbbbb;
+}
+
 /* Grid HTML Classes */
 .row {
   width: 100%;
@@ -565,7 +575,6 @@ h2 {
 h3 {
   font-size: 1.375em; }
 
-
 h4 {
   font-size: 1.125em; }
 
@@ -715,78 +724,7 @@ blockquote p {
 
   h4 {
     font-size: 1.4375em; } }
-/*
- * Print styles.
- *
- * Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/
- * Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
-*/
-.print-only {
-  display: none !important; }
 
-@media print {
-  * {
-    background: transparent !important;
-    color: black !important;
-    /* Black prints faster: h5bp.com/s */
-    box-shadow: none !important;
-    text-shadow: none !important; }
-
-  a,
-  a:visited {
-    text-decoration: underline; }
-
-  a[href]:after {
-    content: " (" attr(href) ")"; }
-
-  abbr[title]:after {
-    content: " (" attr(title) ")"; }
-
-  .ir a:after,
-  a[href^="javascript:"]:after,
-  a[href^="#"]:after {
-    content: ""; }
-
-  pre,
-  blockquote {
-    border: 1px solid #999999;
-    page-break-inside: avoid; }
-
-  thead {
-    display: table-header-group;
-    /* h5bp.com/t */ }
-
-  tr,
-  img {
-    page-break-inside: avoid; }
-
-  img {
-    max-width: 100% !important; }
-
-  @page {
-    margin: 0.5cm; }
-
-  p,
-  h2,
-  h3 {
-    orphans: 3;
-    widows: 3; }
-
-  h2,
-  h3 {
-    page-break-after: avoid; }
-
-  .hide-on-print {
-    display: none !important; }
-
-  .print-only {
-    display: block !important; }
-
-  .hide-for-print {
-    display: none !important; }
-
-  .show-for-print {
-    display: inherit !important; } }
 button, .button {
   border-style: solid;
   border-width: 1px;
@@ -847,12 +785,6 @@ button, .button {
     padding-bottom: 0.625em;
     padding-left: 1.125em;
     font-size: 0.8125em; }
-  button.tiny, .button.tiny {
-    padding-top: 0.4375em;
-    padding-right: 0.875em;
-    padding-bottom: 0.5em;
-    padding-left: 0.875em;
-    font-size: 0.6875em; }
   button.expand, .button.expand {
     padding-right: 0px;
     padding-left: 0px;

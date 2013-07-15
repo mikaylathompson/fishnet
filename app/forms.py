@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form, TextAreaField, TextField, BooleanField, SelectField, PasswordField
+from flask.ext.wtf import Form, TextAreaField, TextField, BooleanField, SelectField, PasswordField, RadioField
 from flask.ext.wtf import Required, Length, ValidationError, URL, InputRequired
 from app.models import User, Link, Folder
 
@@ -74,6 +74,7 @@ class EditLinkForm(Form):
 
 class NewFolder(Form):
 	label = TextField('label', validators = [Required()])
+	visibility = RadioField('visibility', choices=[('0', 'Private'), ('1', 'With Link'), ('2', 'Public')], default=2)
 
 
 

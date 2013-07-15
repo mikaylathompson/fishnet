@@ -21,6 +21,11 @@ def index():
 		folders = Folder.query.filter_by(user_id = g.user.id).order_by(Folder.id).all()
 		sortedLinks = {}
 		for f in folders:
+			#make sure every folder has a visibility set.
+			if f.visibility == None:
+				f.visibility = 2
+				db.session.add(f)
+				db.session.commit()
 			sortedLinks[f] = f.links
 		links = Link.query.filter_by(user_id = g.user.id).order_by(Link.timestamp)	
 		return render_template("index.html",
@@ -38,6 +43,20 @@ def admin():
 		users = []
 		for user in User.query.all():
 			users.append(user)
+		#make sure every link is in a folder.
+		all_links = Link.query.all()
+		for link in all_links:
+			if link.folder_id is None:
+				link.folder_id = User.query.get(link.user_id).folders.all()[0].id
+				db.session.add(link)
+				db.session.commit()
+		#make sure every folder has a visibility set.
+		all_folders = Folder.query.all()
+		for f in all_folders:	
+			if f.visibility == None:
+				f.visibility = 2
+				db.session.add(f)
+				db.session.commit()
 		return render_template('admin.html',
 			user = u,
 			users = users)
@@ -112,7 +131,10 @@ def user(name):
 	if user == None:
 		flash('User' + name + ' not found.')
 		return redirect(url_for('index'))
-	folders = Folder.query.filter_by(user_id = user.id).all()
+	if user == g.user:
+		folders = Folder.query.filter_by(user_id = user.id).all()
+	else:
+		folders = Folder.query.filter_by(user_id = user.id, visibility = 2).all()
 	sortedLinks = {}
 	for f in folders:
 		sortedLinks[f] = f.links
@@ -133,9 +155,19 @@ def folder(name, label):
 	if folder == None:
 		flash(name + ' doesn\'t have a folder of that name.')
 		return redirect(url_for('user', name=name))
-	return render_template('folder.html', 
-		user = user, 
-		folder = folder)
+	permission = False
+	if folder.visibility != 0:
+		permission = True
+	elif user == g.user:
+		permission = True
+	if permission:
+		return render_template('folder.html', 
+			user = user, 
+			folder = folder)
+	else:
+		flash(name + ' doesn\'t have a folder of that name, or you don\'t have permission to view it.')
+		return redirect(url_for('user', name = user.name))
+	
 
 @app.route('/edit', methods = ['GET', 'POST'])
 @login_required
@@ -171,9 +203,6 @@ def changepass():
 			return redirect(url_for('changepass'))
 	else:
 		return render_template('changepass.html', user = g.user, form = form)
-
-
-
 
 @app.route('/newlink', methods = ['GET', 'POST'])
 @login_required
@@ -241,13 +270,34 @@ def newfolder():
 	form = NewFolder()
 	if form.label.data:
 		if form.validate_on_submit():
-			folder = Folder(label = form.label.data, user_id = g.user.id)
+			try:
+				vis = int(form.visibility.data)
+			except ValueError:
+				vis = 2
+			folder = Folder(label = form.label.data, visibility = vis, user_id = g.user.id)
 			db.session.add(folder)
 			db.session.commit()
 			flash('Folder added.')
 			return redirect(url_for('index'))
 		flash('The form wasn\'t created.  Try again.')
 	return render_template('newfolder.html', user = g.user, form = form)
+
+@app.route('/vis/<folderid>/<vis_set>')
+@login_required
+def vis_to(folderid, vis_set):
+	folder = Folder.query.get(folderid)
+	if folder == None:
+		flash('That folder does not exist.')
+		return redirect(url_for('index'))
+	owner = User.query.get(folder.user_id)
+	if g.user != owner:
+		flash('You don\'t have permission to change this folder.')
+		return redirect(url_for('index'))
+	folder.visibility = int(vis_set)
+	db.session.add(folder)
+	db.session.commit()
+	flash('Visibility adjusted.')
+	return redirect(url_for('folder', name = owner.name, label = folder.label))
 
 @app.route('/connect/<userid>')
 @login_required

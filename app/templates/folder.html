@@ -6,6 +6,19 @@
 	<small> by <a href="{{url_for('user', name = user.name)}}">{{user.name}}</a></small>
 </h1>
 
+{% if folder.user_id == g.user.id %}
+	<h6 class="subheader">Change visibility to:
+	{% if folder.visibility != 0 %}
+		<a href="{{url_for('vis_to', folderid = folder.id, vis_set = 0)}}">Private</a> |
+	{% endif %}
+	{% if folder.visibility != 1 %}
+		 <a href="{{url_for('vis_to', folderid = folder.id, vis_set = 1)}}">Visible with Link</a>
+	{% endif %}
+	{% if folder.visibility != 2 %}
+		| <a href="{{url_for('vis_to', folderid = folder.id, vis_set = 2)}}">Public</a><br>
+	{% endif %}
+	<br><br>
+{% endif %}
 
 {% for link in folder.links %}
 	<fieldset class="link">

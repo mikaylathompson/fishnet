@@ -6,7 +6,7 @@
 <ul>
 {% for u in users %}
 	<li>
-		<a href={{ url_for('user', name = u.name) }}>{{ u.name }}</a> -- {{ u.email }}
+		<a href={{ url_for('user', name = u.name) }}>{{ u.name }}</a> -- {{ u.email }} -- {{ u.last_seen }}
 	</li>  
 {% endfor %}
 {% endblock %}

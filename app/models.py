@@ -56,9 +56,9 @@ class Folder(db.Model):
 	
 class Link(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
-	title = db.Column(db.String(64))
-	url = db.Column(db.String(150))
-	annotation = db.Column(db.String(500))
+	title = db.Column(db.String(150))
+	url = db.Column(db.String(300))
+	annotation = db.Column(db.String(1000))
 	timestamp = db.Column(db.DateTime)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	folder_id = db.Column(db.Integer, db.ForeignKey('folder.id'))

@@ -1,18 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
+
+<!-- LEFT NAV MENU -->
+<div class="left-nav">
+	{% for folder in sortedLinks.keys() %}
+		<a class="left-folder-link" href="#{{folder.label}}">{{folder.label}}</a><br>
+	{% endfor %}
+</div>
+
+<!-- CENTER FOLDERS W/ LINKS -->
+<div class="main-display">
 {% for folder in sortedLinks.keys() %}
 	<fieldset>
 	<legend>
 		<a href="{{url_for('folder', name=g.user.name, label=folder.label)}}">{{folder.label}}</a>
 	</legend>
 	{% for link in sortedLinks[folder] %}
-			<a class="link" href="{{link.url}}" target="_blank">{{link.title}}</a>
-		<p class="annotation">{{link.annotation}}
+		<a class="link-title" href="{{link.url}}" target="_blank">{{link.title}}</a><br>
+		<span class="link-annotation">{{link.annotation}}
 			{% if link.user_id == user.id %}
-				   <a class="link"href={{ url_for('editlink', id = link.id) }}>edit</a><br>
+				   <a class="link-edit" href={{ url_for('editlink', id = link.id) }}>edit</a><br>
+			{% else %}
+				<br>
 			{% endif %} 
-		</p>
+		</span>
 	{% endfor %}
 	</fieldset>
 {% endfor %}
+</div>
+
 {% endblock %}

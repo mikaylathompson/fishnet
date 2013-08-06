@@ -1,0 +1,258 @@
+/*style.css*/
+
+body {
+	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
+	line-height: 1.5;
+}
+
+.link,
+p {
+	font-family: 'Scala', Times, serif;}
+
+a {
+	color: inherit;
+	text-decoration: none;}
+
+
+/*Navigation Bar Styling*/
+.top-bar {
+	z-index: 99;
+	position: fixed;
+	width: 100%;
+	height: 2.8em;
+	color: rgb(153,60,96);
+	font-size: 1.5em;
+	box-shadow: 0px 3px rgb(134, 134, 134);
+	background: #cccccc;
+	background: -moz-linear-gradient(top, #cccccc 0%, #dddddd 22%, #dddddd 42%, #cccccc 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(22%,#dddddd), color-stop(42%,#dddddd), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #cccccc 0%, #dadada 22%, #d8d8d8 42%, #cccccc 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #cccccc 0%,#dadada 22%, #d8d8d8 42%,#cccccc 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #cccccc 0%,#dddddd 22%, #dddddd 42%,#ccccc 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #cccccc 0%,#dadada 22%, #d8d8d8 42%,#ccccc 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */}
+.top-bar span {
+	margin-right: .5em;
+	margin-left: .5em;}
+.top-bar .logo {
+	text-align: right;
+	display: inline;
+	position: relative;
+	font-size: 2em;
+	font-weight: bold;
+	color: rgb(199, 79, 124);
+	width: 9em;
+	margin-left: 0em;}
+.top-bar .nav-links {
+	display: inline;
+	position: relative;
+	width: 100%;
+	float: left;}
+.nav-links span {
+	margin-bottom: -5em;
+	padding-bottom: .5em;
+	padding-top: .25em;}
+.drop-down {
+	display: block;
+	position: absolute;
+	visibility: hidden;
+	background: #cccccc;
+	border: 3px solid rgb(134, 134, 134);
+	padding: .5em;
+	top: 2.8em;}
+.add .drop-down {
+	left: 7.4em;}
+.find .drop-down {
+	left: 10.65em;}
+.drop-down:hover {
+	visibility: visible;}
+.find:hover .drop-down,
+.add:hover .drop-down {
+	visibility: visible;}
+
+
+.content {
+	font-family: 'Scala', Times, serif;
+	padding-top: 5em;
+	width: 90%;
+	margin-left: 2em;
+	margin-right: auto;
+	margin-bottom: 0;
+	/**zoom: 1;*/}
+
+
+/*Left Nav Menu stylings*/
+.left-nav {
+	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
+	position: relative;
+	width: 20%;
+	float: left;
+	font-size: 1.7em;
+	margin-top: 1em;
+	padding-right: 1em;
+	text-align: right;
+	color: rgb(153,60,96);}
+
+
+/*Main Display stylings*/
+.main-display {
+	position: relative;
+	/*width: 100%;*/
+	max-width: 50em;
+	float: left;}
+.header {
+	max-width: 55em;
+	margin-right: 20%
+	float: right;
+}
+
+
+/*Link stylings*/
+.link-title {
+	font-family: 'Scala', Times, serif;
+	font-weight: bold;
+	font-size: 1.7em;}
+.link-annotation {
+	line-height: 1.2;
+	font-family: 'Scala', Times, serif;
+	font-size: 1.25em;
+	margin-left: 1.5em;}
+.link-edit {
+	font-size: 1em;
+	margin-left: .5em;
+	color: rgb(153,60,96);
+	font-weight: bold;}
+
+/*Fieldset stylings*/
+fieldset {
+	border: solid 2px rgb(33, 109, 55);
+	padding-left:1em;
+	padding-right: 1em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	margin: 1.125em; }
+fieldset legend {
+	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
+	font-size: 1.5em;
+	color: rgb(153,60,96);
+	font-weight: bold;
+	background: white;
+	padding: 0 0.1875em;
+	margin: 0;
+	margin-left: -0.1875em; }
+
+
+/*Profile stylings*/
+.profile-title {
+	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
+	font-size: 2em;
+	font-weight: bold;}
+.profile-about {
+	font-size: 1.5em;}
+.profile-edit {
+	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
+	font-size: 1em;}
+.profile-edit a {
+	color: rgb(153,60,96);
+	font-weight: bold;}
+
+/*Folder Page Stylings*/
+.folder-title {
+	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 3em;}
+.folder-owner {
+	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
+	font-size: 1.8em;
+	margin-left: .3em;}
+.set-vis {
+	font-size: 1em;
+	margin-left: 0;
+	color: rgb(153,60,96);
+	font-weight: bold;}
+
+
+
+/*Footer Styling*/
+.footer {
+	width: 20%;
+	text-align: center;
+	margin-left: 1em;
+	margin-top: 1em;
+	margin-bottom: .5em;
+	display: inline-block;
+	font-size: 1.2em;
+	color: rgb(153,60,96);
+	float: left;}
+
+.footer a {
+	font-weight: bold;
+}
+
+
+/*Default useful classes*/
+.left {
+  float: left !important; }
+
+.right {
+  float: right !important; }
+
+.text-left {
+  text-align: left !important; }
+
+.text-right {
+  text-align: right !important; }
+
+.text-center {
+  text-align: center !important; }
+
+.text-justify {
+  text-align: justify !important; }
+
+
+
+
+/*Classes to deal with:
+	top-bar
+	contain-to-grid
+	fixed
+	top-bar-section
+	left
+	right
+	divider
+	row
+	rowtop
+	bigrowtop
+	alert-box
+	radius
+	small-#
+	small-offset-#
+	footer
+	subheader
+	custom
+	radio
+	checked
+	columns
+	button
+	error
+	really-small
+
+Elements to deal with:
+	body
+	a
+	nav
+	ul
+	li
+	section
+	div
+	h1
+	h3
+	p
+	small
+	form
+	input
+	span
+	label
+	fieldset
+	legend*/
+

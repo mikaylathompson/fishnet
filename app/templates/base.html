@@ -17,24 +17,24 @@
 <body>
 	<div class="top-bar">
 		<span class="nav-links">
-			<span class="logo"><a href="{{ url_for('index') }}">fishnet</a></span>
+			<span class="logo"><a href="{{ url_for('index') }}"> fishnet</a></span>
 			{% if g.user.is_authenticated() %}
 				<span class="add">
-					<a href="#">Add</a>
+					<a href="#">Add...</a>
 					<span class="add drop-down">
 						<a href="{{ url_for('newlink') }}">Link</a><br>
 						<a href="{{ url_for('newfolder') }}">Folder</a><br>
-						Connection
+						<!-- Connection -->
 					</span>
 				</span>
-				<span class="find">
+				<!-- <span class="find">
 					<a href="#">Find</a>
 					<span class="find drop-down">
 						<a href="{{ url_for('newlink') }}">Link</a><br>
 						<a href="{{ url_for('newfolder') }}">Folder</a><br>
 						Connection
 					</span>
-				</span>
+				</span> -->
 				<span><a href="{{ url_for('user', name = g.user.name) }}">Profile</a></span>
 				<span><a href="{{ url_for('logout') }}">Logout</a></span>
 			{% else %}
@@ -54,9 +54,10 @@
 		{% endif %}
 	{% endwith %}
 
-
+<div class="content">
 {% block content %}
 {% endblock %}
+</div>
 
 	<div class="footer">
 			<a href="{{url_for('user', name = 'Mikayla')}}" target="_blank">Mikayla</a>  |  2013  |  <a href="http://www.github.com/mikaylathompson/fishnet" target="_blank">Code</a>

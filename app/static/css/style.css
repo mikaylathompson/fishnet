@@ -7,7 +7,12 @@ body {
 
 .link,
 p {
-	font-family: 'Scala', Times, serif;}
+	font-family: 'Scala', Times, serif;
+	font-size: 1.3em;
+	margin-left: 15%;
+	margin-right: 15%;
+
+}
 
 a {
 	color: inherit;
@@ -104,8 +109,7 @@ a {
 .header {
 	max-width: 55em;
 	margin-right: 20%
-	float: right;
-}
+	float: right;}
 
 
 /*Link stylings*/
@@ -143,8 +147,6 @@ fieldset legend {
 	margin-left: -0.1875em; }
 
 
-
-
 /*Profile stylings*/
 .profile-title {
 	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
@@ -177,8 +179,7 @@ fieldset legend {
 /*Form Stylings*/
 form {
 	font-size: 1.5em;
-	line-height: 2;
-}
+	line-height: 2;}
 .form-label {
 	width: 8em;
 	text-align: right;
@@ -194,8 +195,14 @@ form {
 	font-size: .2em;
 	line-height: 1;}
 
-
-
+/*Welcome Page Stylings*/
+h1 {
+	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
+	font-size: 2.5em;
+	margin-left: 15%;}
+p a {
+	color: rgb(153,60,96);
+	font-weight: bold;}
 
 
 /*Footer Styling*/
@@ -214,8 +221,7 @@ form {
 	position: fixed;}
 
 .footer a {
-	font-weight: bold;
-}
+	font-weight: bold;}
 
 
 /*Default useful classes*/

@@ -238,7 +238,10 @@ form {
   text-align: justify !important; }
 
 .invisible {
-	visibility: hidden;
+	visibility: hidden; }
+
+.pink-link {
+	color: rgb(153,60,96);
 }
 
 

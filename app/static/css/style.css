@@ -10,9 +10,7 @@ p {
 	font-family: 'Scala', Times, serif;
 	font-size: 1.3em;
 	margin-left: 15%;
-	margin-right: 15%;
-
-}
+	margin-right: 15%;}
 
 a {
 	color: inherit;
@@ -27,7 +25,7 @@ a {
 	height: 2.8em;
 	color: rgb(153,60,96);
 	font-size: 1.5em;
-	box-shadow: 0px 3px rgb(134, 134, 134);
+	box-shadow: 0px 2px rgb(87, 87, 87);
 	background: #cccccc;
 	background: -moz-linear-gradient(top, #cccccc 0%, #dddddd 22%, #dddddd 42%, #cccccc 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(22%,#dddddd), color-stop(42%,#dddddd), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */

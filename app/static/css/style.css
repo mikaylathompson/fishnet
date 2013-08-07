@@ -83,6 +83,19 @@ a {
 	margin-bottom: 0;
 	/**zoom: 1;*/}
 
+.flash-box {
+	margin-left: 20%;
+	margin-right: 20%;
+	text-align: center;
+	font-size: 1.8em;
+	font-weight: bold;
+	border: 2px solid rgb(153,60,96);
+	background-color: rgb(207, 147, 170);
+	border-radius: 5px;
+}
+
+
+
 
 /*Left Nav Menu stylings*/
 .left-nav {

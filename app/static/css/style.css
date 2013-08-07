@@ -84,7 +84,7 @@ a {
 /*Left Nav Menu stylings*/
 .left-nav {
 	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
-	position: relative;
+	position: fixed;
 	width: 20%;
 	float: left;
 	font-size: 1.7em;
@@ -96,7 +96,8 @@ a {
 
 /*Main Display stylings*/
 .main-display {
-	position: relative;
+	position: absolute;
+	margin-left: 20%;
 	/*width: 100%;*/
 	max-width: 50em;
 	float: left;}
@@ -130,7 +131,7 @@ fieldset {
 	padding-right: 1em;
 	padding-top: .25em;
 	padding-bottom: .25em;
-	margin: 1.125em; }
+	margin: 1.125em;}
 fieldset legend {
 	font-family: 'Caviar Dreams', 'Aller Light', 'Klinic Slab', Helvetica, sans-serif;
 	font-size: 1.5em;
@@ -140,6 +141,8 @@ fieldset legend {
 	padding: 0 0.1875em;
 	margin: 0;
 	margin-left: -0.1875em; }
+
+
 
 
 /*Profile stylings*/
@@ -171,6 +174,28 @@ fieldset legend {
 	color: rgb(153,60,96);
 	font-weight: bold;}
 
+/*Form Stylings*/
+form {
+	font-size: 1.5em;
+	line-height: 2;
+}
+.form-label {
+	width: 8em;
+	text-align: right;
+	float: left;
+	padding-right: .25em;
+	vertical-align: middle;}
+.form-field {
+	float: left;
+	text-align: left;
+	padding-left: .25em;
+	width: 60%;}
+.form-field b {
+	font-size: .2em;
+	line-height: 1;}
+
+
+
 
 
 /*Footer Styling*/
@@ -178,12 +203,15 @@ fieldset legend {
 	width: 20%;
 	text-align: center;
 	margin-left: 1em;
-	margin-top: 1em;
+	position: absolute;
 	margin-bottom: .5em;
 	display: inline-block;
 	font-size: 1.2em;
 	color: rgb(153,60,96);
-	float: left;}
+	float: left;
+	/*THINGS I DON'T WANT TO DO*/
+	margin-top: 28em;
+	position: fixed;}
 
 .footer a {
 	font-weight: bold;
@@ -209,7 +237,9 @@ fieldset legend {
 .text-justify {
   text-align: justify !important; }
 
-
+.invisible {
+	visibility: hidden;
+}
 
 
 /*Classes to deal with:

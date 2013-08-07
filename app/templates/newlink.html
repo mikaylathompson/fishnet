@@ -1,52 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="subheader">Add a new link:</h1>
 <form action="" method="post" name="newlink">
 	<fieldset>
 		<legend>New Link</legend>
-	{{ form.hidden_tag() }}
+		{{ form.hidden_tag() }}
 
-	<div class="row">
-		<div class="small-10 small-offset-1 columns">
+		<span class="form-label"> 
 			<label>Title</label>
+		</span>
+		<span class="form-field">
 			{{ form.title(size=40) }}
-			{% if form.title.errors %}
-				<small class="error">Invalid entry</small>
-			{% endif %}
-		</div>
-	</div>
-	<div class="row">
-		<div class="small-10 small-offset-1 columns">
+		</span>
+		<br>
+		<span class="form-label"> 
 			<label>Link</label>
+		</span>
+		<span class="form-field">
 			{{ form.url(size=40) }}
-			{% if form.url.errors %}
-				<small class="error">Invalid entry</small>
-			{% endif %}
-		</div>
-	</div>
-	<div class="row">
-		<div class="small-10 small-offset-1 columns">
+		</span>
+		<br>
+		<span class="form-label"> 
 			<label>Annotation</label>
+		</span>
+		<span class="form-field">
 			{{ form.annotation(cols=50, rows=5) }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="small-4 small-offset-1 columns">
-			<label>Folder</label>
-			{{ form.folder(size=4) }}
-			{% if form.folder.errors %}
-				<small class="error">Invalid entry</small>
-			{% endif %}
-		</div>
-	</div>
-	<div class="row">
-		<div class="small-2 small-offset-1 columns">
+		</span>
+		
+		<span class="form-label"> 
+			<label><br><br>Folder</label>
+		</span>
+		<span class="form-field"><b><br></b>
+			{{ form.folder(size=5) }}
+		</span>
+		<br>
+		<span class="form-label invisible"> 
+			Submit
+		</span>
+		<span class="form-field">
 			<input type="submit" value="Add link" class="button">
-		</div>
-	</div>
-
-
+		</span>
+		
 	</fieldset>
+
 </form>
 {% endblock %}

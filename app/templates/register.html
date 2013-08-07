@@ -2,32 +2,35 @@
 
 {% block content %}
 
-<h1 class="subheader"> Register </h1>
 <form action='' method='post' name='register'>
-	{{form.hidden_tag()}}
-	<div class="row">
-		<div class="small-6 small-offset-1 columns">
-			<label>Name:</label>
-			{{ form.name(size=40) }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="small-6 small-offset-1 columns">
-			<label>Email:</label>
-			{{ form.email(size=40) }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="small-4 small-offset-1 columns">
-			<label>Password:</label>
-			{{ form.pswd(size=40) }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="small-3 small-offset-1 columns">
-			<input type="submit" value="Login" class="button">
-		</div>
-	</div>
+	<fieldset>
+		<legend>Register</legend>
+		{{form.hidden_tag()}}
+		<span class="form-label"> 
+			<label>Name</label>
+		</span>
+		<span class="form-field">
+			{{ form.name(size=15) }}
+		</span>
+		<span class="form-label"> 
+			<label>Email</label>
+		</span>
+		<span class="form-field">
+			{{ form.email(size=25) }}
+		</span>
+		<span class="form-label"> 
+			<label>Password</label>
+		</span>
+		<span class="form-field">
+			{{ form.pswd(size=10) }}
+		</span>
+		<span class="form-label invisible"> 
+			Submit
+		</span>
+		<span class="form-field">
+			<input type="submit" value="Register" class="button">
+		</span>
+	</fieldset>
 </form>
 
 

@@ -1,36 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="subheader">
-	{{folder.label}}
-	<small> by <a href="{{url_for('user', name = user.name)}}">{{user.name}}</a></small>
-</h1>
+	<span class="folder-title">{{folder.label}}</span>
+	<span class="folder-owner">by <a href="{{url_for('user', name = user.name)}}">{{user.name}}</a></span>
+	<br>
 
 {% if folder.user_id == g.user.id %}
-	<h6 class="subheader">Change visibility to:
+	Change visibility to:
 	{% if folder.visibility != 0 %}
-		<a href="{{url_for('vis_to', folderid = folder.id, vis_set = 0)}}">Private</a> |
+		<a class="set-vis" href="{{url_for('vis_to', folderid = folder.id, vis_set = 0)}}">Private</a> | 
 	{% endif %}
 	{% if folder.visibility != 1 %}
-		 <a href="{{url_for('vis_to', folderid = folder.id, vis_set = 1)}}">Visible with Link</a>
+		 <a class="set-vis" href="{{url_for('vis_to', folderid = folder.id, vis_set = 1)}}">Visible with Link</a>
 	{% endif %}
 	{% if folder.visibility != 2 %}
-		| <a href="{{url_for('vis_to', folderid = folder.id, vis_set = 2)}}">Public</a><br>
+		| <a class="set-vis" href="{{url_for('vis_to', folderid = folder.id, vis_set = 2)}}">Public</a><br>
 	{% endif %}
-	<br><br>
 {% endif %}
 
 {% for link in folder.links %}
 	<fieldset class="link">
-		<h3 class="subheader">
-			<a class=link href="{{link.url}}" target="_blank">{{link.title}}</a>
-		<small> {{link.annotation}}
-			{% if link.user_id == g.user.id %}
-			</small><small class="really-small">
-				   <a href={{ url_for('editlink', id = link.id) }}>edit</a>
+		<a class="link-title" href="{{link.url}}" target="_blank">{{link.title}}</a><br>
+		<span class="link-annotation">{{link.annotation}}
+			{% if link.user_id == user.id %}
+				   <a class="link-edit" href={{ url_for('editlink', id = link.id) }}>edit</a><br>
+			{% else %}
+				<br>
 			{% endif %} 
-		</small>
-		</h3>
+		</span>
 	</fieldset>
 {% endfor %}
 {% endblock %}

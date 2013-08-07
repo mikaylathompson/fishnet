@@ -1,23 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 class="subheader">{{user.name}}'s fishnet</h1>
 
+<!-- LEFT NAV MENU -->
+<div class="left-nav">
+	{% for folder in sortedLinks.keys() %}
+		<a class="left-folder-link" href="#{{folder.label}}">{{folder.label}}</a><br>
+	{% endfor %}
+</div>
+
+<!-- CENTER FOLDERS W/ LINKS -->
+<div class="main-display">
 {% for folder in sortedLinks.keys() %}
 	<fieldset>
 	<legend>
-		<a href="{{url_for('folder', name=g.user.name, label=folder.label)}}">{{folder.label}}</a>
+		<a id="{{folder.label}}" href="{{url_for('folder', name=g.user.name, label=folder.label)}}">
+			{{folder.label}}
+		</a>
 	</legend>
 	{% for link in sortedLinks[folder] %}
-		<h3 class="subheader">
-			<a class=link href="{{link.url}}" target="_blank">{{link.title}}</a>
-		<small> {{link.annotation}}
+		<a class="link-title" href="{{link.url}}" target="_blank">{{link.title}}</a><br>
+		<span class="link-annotation">{{link.annotation}}
 			{% if link.user_id == user.id %}
-			</small><small class="really-small">
-				   <a href={{ url_for('editlink', id = link.id) }}>edit</a>
+				   <a class="link-edit" href={{ url_for('editlink', id = link.id) }}>edit</a><br>
+			{% else %}
+				<br>
 			{% endif %} 
-		</small>
-		</h3>
+		</span>
 	{% endfor %}
 	</fieldset>
 {% endfor %}
+</div>
+
 {% endblock %}

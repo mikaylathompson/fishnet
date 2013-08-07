@@ -1,48 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="subheader">New folder:</h1>
 <form action="" method="post" name="newfolder">
-	{{ form.hidden_tag() }}
-	<label>Title:</label> {{form.label(size=40) }}
-	<label>Visibility:</label> 
+	<fieldset>
+		<legend>New Folder</legend>
+		{{ form.hidden_tag() }}
+		<span class="form-label"> 
+			<label>Label</label>
+		</span>
+		<span class="form-field">
+			{{ form.label(size=30) }}
+		</span>
+		<br>
+		<span class="form-label"> 
+			<label>Visibility</label>
+		</span>
+		<span class="form-field">
+		 	<label for="visibility-0">
+				<input class="radio" id="visibility-0" name="visibility" type="radio" value="0" style="margin-left: .5em;" >
+				<span class="radio"></span>Private
+			</label>
 
+			<label for="visibility-1">
+				<input class="radio" id="visibility-1" name="visibility" type="radio" value="1" style="margin-left: 1em;" >
+				<span class="radio"></span>
+				Visible with Link
+			</label>
 
- 	<label for="visibility-0">
-		<input class="custom radio" id="visibility-0" name="visibility" type="radio" value="0" >
-		<span class="custom radio"></span>Private
-	</label>
+			<label for="visibility-2">
+				<input class="radio" id="visibility-2" name="visibility" type="radio" value="2" style="margin-left: 1em;" >
+				<span class="radio"></span>
+				Public
+			</label>		
+		</span>
+	 	
+		<br>
+		<span class="form-label invisible"> 
+			Submit
+		</span>
+		<span class="form-field">
+			<input type="submit" value="Add Folder" class="button">
+		</span>
 
-	<label for="visibility-1">
-		<input class="custom radio" id="visibility-1" name="visibility" type="radio" value="1" >
-		<span class="custom radio"></span>
-		Visible with Link
-	</label>
-
-	<label for="visibility-2">
-		<input class="custom radio checked" id="visibility-2" name="visibility" type="radio" value="2" >
-		<span class="custom radio checked"></span>
-		Public
-	</label>
-
-<!-- 	{% for sub in form.visibility %}
-
-		{{ sub.label }}
-		{{ sub(class_="custom radio") }} 
-		
-		
-	{% endfor %}  -->
-    
-
-	<!-- <label for="visibility"><input name="visibility" type="radio" id="visibility" style="display:none;" CHECKED><span class="custom radio checked"></span> Radio Button 1</label>
-      <label for="radio1"><input name="radio1" type="radio" id="radio1" style="display:none;"><span class="custom radio"></span> Radio Button 2</label>
-      <label for="radio1"><input name="radio1" type="radio" id="radio1" style="display:none;"><span class="custom radio"></span> Radio Button 3</label>
-
-
-
-
-	{{ form.visibility }} -->
-	<input type="submit" value="Create Folder">
+	</fieldset>
 </form>
 
 {% endblock %}

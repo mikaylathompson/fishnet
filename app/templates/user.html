@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2 class="subheader">
-	{{user.name}}'s fishnet
+<!-- ABOUT USER INFO -->
+<div class="header">
+<span class="profile-title">{{user.name}}'s fishnet</span>
 	{% if user.about_me %}
-	<small>
+	<span class="profile-about">
 		<br>{{user.about_me}}
-	</small>
+	</span>
 	{% endif %}
-	<small class="really-small">
+	<span class="profile-edit">
 		{% if user.id == viewer.id %}
-			{{viewer.email}}
-			<a href="{{url_for('edit', user = g.user.id)}}">Edit</a> -- 
+			<br>
+			<a href="{{url_for('edit', user = g.user.id)}}">Edit</a> | 
 			<a href="{{ url_for('changepass') }}">Change Password</a>
 		{% else %}
 			{% with folder = viewer.folders.filter_by(label = 'Connections').first() %}
@@ -21,7 +22,6 @@
 				{% with address = url_for('user', name = user.name) %}
 				{% with connected = folder.links.filter_by(url = address).all() %}
 				{% if connected[0] %}
-					Connected
 				{% else %}
 					<a href="{{url_for('connect', userid = user.id)}}">Connect to {{user.name}}</a>
 				{% endif %}
@@ -30,12 +30,21 @@
 			{% endif %}
 			{% endwith %}
 		{% endif %}
-	</small>
+	</span>
+</div>
+
+<!-- LEFT NAV MENU -->
+<div class="left-nav">
+	{% for folder in sortedLinks.keys() %}
+		<a class="left-folder-link" href="#{{folder.label}}">{{folder.label}}</a><br>
+	{% endfor %}
+</div>
+
+<div class="main-display">
 	
-</h2>
 <!-- {% if user.last_seen %}<em>Last seen on: {{user.last_seen}} </em>{% endif %} -->
 
-
+<!-- CENTER FOLDERS W/ LINKS -->
 {% for folder in sortedLinks.keys() %}
 	{% if user == g.user or folder.visibility == 2 %}
 		<fieldset>
@@ -43,19 +52,24 @@
 			<a href="{{url_for('folder', name=user.name, label=folder.label)}}">{{folder.label}}</a>
 		</legend>
 		{% for link in sortedLinks[folder] %}
-			<h3 class="subheader">
-				<a class=link href="{{link.url}}" target="_blank">{{link.title}}</a>
-			<small> {{link.annotation}}
+			<a class="link-title" href="{{link.url}}" target="_blank">{{link.title}}</a><br>
+			<span class="link-annotation">{{link.annotation}}
 				{% if link.user_id == g.user.id %}
-				</small><small class="really-small">
-					   <a href={{ url_for('editlink', id = link.id) }}>edit</a>
+					   <a class="link-edit" href={{ url_for('editlink', id = link.id) }}>edit</a><br>
+				{% else %}
+					<br>
 				{% endif %} 
-			</small>
-			</h3>
+			</span>
 		{% endfor %}
 		</fieldset>
 	{% endif %}
 {% endfor %}
+</div>
+
+
+
+
+
 {% endblock %}
 
 

@@ -1,29 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="subheader">Welcome to fishnet</h1>
-<h4 class="subheader">
-	Fishnet is a site for catching and sharing links.<br><br>
+<h1>Welcome to fishnet</h1>
+<p>
+	Fishnet is a site for catching and sharing links.
+</p>
+<p>
+	At its heart, it's bookmarks with annotations: write a note about why you're saving the link, 
+	what parts of the page you want to reference, 
+	a particularly important quote, 
+	or just a summary.
+</p>
+<p>
+	Links are saved in folders, which you can keep private or share with others. 
+	Your user page shows all of your folders and links to provide a 
+	snapshot of what you're reading or thinking about.
+</p>
+<p>
+	Beyond bookmarks, 
+	you could make a portfolio folder with links to your projects, 
+	or put together a curated reading list about a particular topic,
+	or keep track of articles you've read and your thoughts on them.
+	It's up to you!
+</p>
+<p>
 
-	At it's heart, it's bookmarks with annotations:<br>
-	write a note about why you're saving the link,<br>
-	what parts of the page you want to reference,<br>
-	a particularly important quote,<br>
-	or just a summary.<br><br>
-
-	Links are saved in folders, which you can share with others. <br>
-	Your user page shows all of your folders and links to provide a <br>
-	snapshot of what you're reading or thinking about.<br><br>
-
-	Beyond bookmarks, <br>
-	you could make a portfolio folder with links to your projects,<br> 
-	or put together a curated reading list about a particular topic,<br>
-	or keep track of articles you've read and your thoughts on them.<br>
-	It's up to you!<br><br>
-</h4>
-<h3 class="subheading">
 	To get started with fishnet, <a href="{{ url_for('login')}}">login</a> or <a href="{{ url_for('register')}}">register</a>.
-</h3>
+</p>
 
 
 {% endblock %}

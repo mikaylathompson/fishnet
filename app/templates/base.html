@@ -10,80 +10,57 @@
 		{% endif %}
 		 </title>
 	<link rel="stylesheet" href="/static/css/normalize.css" />
-	<link rel="stylesheet" href="/static/css/foundation.css/?v=2" />
-	<script src="/static/js/vendor/custom.modernizr.js"></script>
+	<link rel="stylesheet" href="/static/css/style.css/?v=3" />
 </head>
 <body>
-	<nav class="top-bar contain-to-grid fixed">
-		<ul class="title-area">
-			<li class="name">
-				<h1><a href="{{ url_for('index') }}">fishnet</a></h1>
-			</li>
-		</ul>
-		<section class="top-bar-section">
-		{% if g.user.is_authenticated() %}
-			<ul class="left">
-				<li class="divider"></li>
-				<li><a href="{{ url_for('newlink') }}"> Add Link</a></li>
-				<li class="divider"></li>
-				<li><a href="{{ url_for('newfolder') }}">Add Folder</a></li>
-				<li class="divider"></li>
-			</ul>
-			<ul class="right">
-				<li class="divider"></li>
-				<li><a href="{{ url_for('user', name = g.user.name) }}">Profile</a></li>
-				<li class="divider"></li>
-				<li><a href="{{ url_for('logout') }}">Logout</a></li>
-			</ul>
-		{% else %}
-			<ul class="right">
-				<li class="divider"></li>
-				<li><a href="{{ url_for('register') }}">Register</a></li>
-				<li class="divider"></li>
-				<li><a href="{{ url_for('login') }}">Login</a></li>
-			</ul>
-		{% endif %}
-		</section>
-	</nav>
+	<div class="top-bar">
+		<span class="nav-links">
+			<span class="logo"><a href="{{ url_for('index') }}"> fishnet</a></span>
+			{% if g.user.is_authenticated() %}
+				<span class="add">
+					<a href="#">Add...</a>
+					<span class="add drop-down">
+						<a href="{{ url_for('newlink') }}">Link</a><br>
+						<a href="{{ url_for('newfolder') }}">Folder</a><br>
+						<!-- Connection -->
+					</span>
+				</span>
+				<!-- <span class="find">
+					<a href="#">Find</a>
+					<span class="find drop-down">
+						<a href="{{ url_for('newlink') }}">Link</a><br>
+						<a href="{{ url_for('newfolder') }}">Folder</a><br>
+						Connection
+					</span>
+				</span> -->
+				<span><a href="{{ url_for('user', name = g.user.name) }}">Profile</a></span>
+				<span><a href="{{ url_for('logout') }}">Logout</a></span>
+			{% else %}
+				<span><a href="{{ url_for('register') }}">Register</a></span>
+				<span><a href="{{ url_for('login') }}">Login</a></span>
+			{% endif %}
+		</span>
+	</div>
 	
+
+
+<div class="content">
 	{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
-			<div class="row bigrowtop">
-				<div data-alert class="alert-box radius large-6 large-offset-3">
-					{{ message }}
-				</div>
+			<div data-alert class="flash-box">
+				{{ message }}
 			</div>
 			{% endfor %}
-
-	<div class="row">
-		{% else %}
-	<div class="row rowtop">
 		{% endif %}
 	{% endwith %}
-		<div class="large-10 large-offset-1">
-			{% block content %}
-			{% endblock %}
-		</div>
-	</div>
+{% block content %}
+{% endblock %}
+</div>
 
-	<div class="row footer">
+	<div class="footer">
 			<a href="{{url_for('user', name = 'Mikayla')}}" target="_blank">Mikayla</a>  |  2013  |  <a href="http://www.github.com/mikaylathompson/fishnet" target="_blank">Code</a>
 	</div>
-
-	<script>
-		document.write('<script src=' +
-		('__proto__' in {} ? '/static/js/vendor/zepto' : '/static/js/vendor/jquery') +
-		'.js><\/script>')
-		</script>
-		<script src="/static/js/foundation/foundation.js"></script>
-		<!-- <script src="/static/js/foundation/foundation.alerts.js"></script> -->
-		<script src="/static/js/foundation/foundation.forms.js"></script>
-		<script src="/static/js/foundation/foundation.placeholder.js"></script>
-		<script src="/static/js/foundation/foundation.topbar.js"></script>
-		<script>
-			$(document).foundation();
-	</script>
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

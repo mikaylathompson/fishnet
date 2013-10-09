@@ -1,4 +1,4 @@
-fishnet
+#fishnet
 ======================
 
 fishnet is a simple link-gathering and sharing app. 
@@ -11,6 +11,6 @@ Most of all, it's an exercise to learn/practice Flask, Python, and vim.
 
 
 
-And we're live!!  Fishnet can be accessed at http://www.fishnet.in
+### And we're live!!  Fishnet can be accessed at http://www.fishnet.in
 
 
